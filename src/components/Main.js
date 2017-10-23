@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Rx from 'rxjs'
+import MenuBar from './MenuBar'
 import Input from './Input'
 import ExampleLine from './ExampleLine'
 import Keyboard from './Keyboard'
@@ -11,14 +12,28 @@ class Main extends Component {
     let {words} = this.props.words
     this.state = {
       inputValue: '',
-      exampleLine: words
+      wordsStore: words,
+      exampleLine: []
     }
+  }
+
+  onChange = () => {
+    let defaultValue = Rx.Observable.of(this.state.inputValue)
+    defaultValue.subscribe(e => {
+      console.log(e)
+    })
+  }
+
+  getRandomWord = () => {
+    let {wordsStore} = this.state
+    let rand = wordsStore[Math.floor(Math.random() * wordsStore.length)]
+    console.log(rand)
   }
 
   componentDidMount() {
     let {inputValue, exampleLine} = this.state
-    let keyDown = Rx.Observable.fromEvent(document, 'keydown'),
-      keyUp = Rx.Observable.fromEvent(document, 'keyup'),
+    let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keydown'),
+      keyUp = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keyup'),
       charCounter = 0,
       exampleArray = exampleLine.join(' ').split(''), //массив для побуквенного сравнения с инпутом
       spaceButton = document.getElementsByClassName('spacebar')
@@ -57,7 +72,8 @@ class Main extends Component {
 
   render() {
     let {inputValue, exampleLine} = this.state
-    return <div className="App">
+    return <div className="App" onChange={this.onChange}>
+      <MenuBar/>
       <Input value={inputValue}/>
       <ExampleLine value={exampleLine}/>
       <Keyboard/>
