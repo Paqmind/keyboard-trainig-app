@@ -22,15 +22,15 @@ class Main extends Component {
   onChange = () => {
     let defaultValue = Rx.Observable.of(this.state.inputValue)
     defaultValue.subscribe(e => {
-      let beginnerButton = document.getElementById('beginner')
-      let advancedButton = document.getElementById('advanced')
+      let beginnerButton = document.getElementById('beginner') // radioButtons для
+      let advancedButton = document.getElementById('advanced') // переключения режима
 
-      if (e == '') { //переключение режима доступно только при пустой строке ввода
-        beginnerButton.disabled = false //когда строка ввода НЕ пуста
-        advancedButton.disabled = false // radioButtons заблокированы
+      if (e == '') { // переключение режима доступно только при пустой строке ввода
+        beginnerButton.disabled = false
+        advancedButton.disabled = false
       } else {
-        beginnerButton.disabled = true
-        advancedButton.disabled = true
+        beginnerButton.disabled = true // когда строка ввода НЕ пуста
+        advancedButton.disabled = true // radioButtons задизейблены
       }
     })
   }
@@ -38,12 +38,12 @@ class Main extends Component {
   modeSwitcher = () => {
     let mode = Rx.Observable.fromEvent(document.getElementsByName('mode'), 'change')
     mode.subscribe(e => {
-      this.setState({mode: e.target.value})
+      this.setState({mode: e.target.value}) //изменение состояния при переключении radioButtons
     })
   }
 
-  beginnerModeLineGenerator = () => {
-    let {wordsStore} = this.state
+  beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
+    let {wordsStore} = this.state     // и добавляет эту строку в состояние exampleLine
     let beginnerExampleLine = []
     let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
     for (let i = 0; i < 50; i++) {
@@ -54,7 +54,7 @@ class Main extends Component {
     this.setState({exampleLine: beginnerExampleLine})
   }
 
-  advancedModeLineGenerator = () => {
+  advancedModeLineGenerator = () => { // метод генерирует строку из разных случайных слов
     let {wordsStore} = this.state
     let advancedExampleLine = []
     for (let i = 0; i < 50; i++) {
@@ -77,12 +77,9 @@ class Main extends Component {
 
   componentDidMount() {
 
-    let language = window.navigator.language
-    console.log(language)
-
     let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keydown'),
       keyUp = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keyup'),
-      charCounter = 0,
+      charCounter = 0, // счетчик для побуквенного сравнения инпута и строки-примера
       spaceButton = document.getElementsByClassName('spacebar')
 
 
@@ -96,26 +93,26 @@ class Main extends Component {
           this.setState({inputValue: this.state.inputValue + e.key}) //если соответствует отображаем в строке инпута
           currentButton[0].classList.add('keydown') // имитация нажатия кнопки на экранной клавиатуре
 
-          if (prevButton.length > 0) { //проверка для удаления подсветки на предыдущей кнопке
-            prevButton[0].classList.remove('selected-button')
-          } else {
-            spaceButton[0].classList.remove('selected-button')
-          }
-
           if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
             nextButton[0].classList.add('selected-button')
           } else {
             spaceButton[0].classList.add('selected-button')
           }
 
+          if (prevButton.length > 0) { //проверка для удаления подсветки на предыдущей кнопке
+            prevButton[0].classList.remove('selected-button')
+          } else {
+            spaceButton[0].classList.remove('selected-button')
+          }
+
           charCounter++
 
           if (this.state.inputValue == this.state.exampleLine.join(' ')) {
-            spaceButton[0].classList.remove('selected-button')
-            charCounter = 0
-            this.setState({inputValue: ''})
-            if (this.state.mode == 'beginner') {
-              this.beginnerModeLineGenerator()
+            spaceButton[0].classList.remove('selected-button') // если строка инпута равна строке-примеру
+            charCounter = 0                                    // обнуляем счетчик
+            this.setState({inputValue: ''})                    // cбрасываем инпут
+            if (this.state.mode == 'beginner') {               // в зависимости от режима вызываем
+              this.beginnerModeLineGenerator()                 // необходимый метод
             } else if (this.state.mode == 'advanced') {
               this.advancedModeLineGenerator()
             }
