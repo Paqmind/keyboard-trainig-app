@@ -1,11 +1,11 @@
 import React from 'react'
 
-const MenuBar = () => {
+const MenuBar = (props) => {
   return <div>
-    <input type="radio" id="beginner-mode" name="mode" value="beginner"/>
-    <label htmlFor="beginner-mode">beginner</label>
-    <input type="radio" id="advanced-mode" name="mode" value="advanced"/>
-    <label htmlFor="advanced-mode">advanced</label>
+    <input type="radio" id="beginner" name="mode" value="beginner" onClick={props.handler} defaultChecked={true}/>
+    <label htmlFor="beginner">beginner</label>
+    <input type="radio" id="advanced" name="mode" value="advanced" onClick={props.handler}/>
+    <label htmlFor="advanced">advanced</label>
   </div>
 }
 
