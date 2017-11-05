@@ -14,7 +14,8 @@ class Main extends Component {
       inputValue: '',
       exampleLine: [],
       mode: 'beginner',
-      wordsStore: words
+      wordsStore: words,
+      charCounter: 0 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
 
@@ -66,6 +67,50 @@ class Main extends Component {
     this.setState({exampleLine: advancedExampleLine})
   }
 
+  keyDownButtonHandler = () => {
+    let {inputValue, exampleLine, mode, charCounter} = this.state
+    let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keydown')
+    keyDown.subscribe(e => {
+      console.log(this.state.exampleLine)
+      let nextButton = document.getElementsByClassName(this.state.exampleLine.join(' ').split('')[this.state.charCounter + 1]),
+        prevButton = document.getElementsByClassName(this.state.exampleLine.join(' ').split('')[this.state.charCounter]),
+        spaceButton = document.getElementsByClassName('spacebar'),
+        currentButton = document.getElementsByClassName(e.keyCode)
+
+      if (e.key == this.state.exampleLine.join(' ').split('')[this.state.charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
+        this.setState({inputValue: this.state.inputValue + e.key}) //если соответствует отображаем в строке инпута
+        currentButton[0].classList.add('keydown') // имитация нажатия кнопки на экранной клавиатуре
+
+        if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
+          nextButton[0].classList.add('selected-button')
+        } else {
+          spaceButton[0].classList.add('selected-button')
+        }
+
+        if (prevButton.length > 0) { //проверка для удаления подсветки на предыдущей кнопке
+          prevButton[0].classList.remove('selected-button')
+        } else {
+          spaceButton[0].classList.remove('selected-button')
+        }
+
+        this.setState({charCounter: this.state.charCounter + 1})
+
+        if (this.state.inputValue == this.state.exampleLine.join(' ')) {
+          spaceButton[0].classList.remove('selected-button') // если строка инпута равна строке-примеру
+          this.setState({
+            charCounter: 0,                                  // обнуляем счетчик
+            inputValue: ''                                   // сбрасываем инпут
+          })
+          if (this.state.mode == 'beginner') {               // в зависимости от режима вызываем
+            this.beginnerModeLineGenerator()                 // необходимый метод
+          } else if (this.state.mode == 'advanced') {
+            this.advancedModeLineGenerator()
+          }
+        }
+      }
+    })
+  }
+
 
   componentWillMount() {
     if (this.state.mode == 'beginner') {
@@ -77,58 +122,26 @@ class Main extends Component {
 
   componentDidMount() {
 
-    let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keydown'),
-      keyUp = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keyup'),
-      charCounter = 0, // счетчик для побуквенного сравнения инпута и строки-примера
-      spaceButton = document.getElementsByClassName('spacebar')
+    this.keyDownButtonHandler()
+
+    let keyUp = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keyup')
 
 
-      keyDown.subscribe(e => {
-        console.log(this.state.exampleLine)
-        let nextButton = document.getElementsByClassName(this.state.exampleLine.join(' ').split('')[charCounter + 1]),
-          prevButton = document.getElementsByClassName(this.state.exampleLine.join(' ').split('')[charCounter]),
-          currentButton = document.getElementsByClassName(e.keyCode)
-
-        if (e.key == this.state.exampleLine.join(' ').split('')[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
-          this.setState({inputValue: this.state.inputValue + e.key}) //если соответствует отображаем в строке инпута
-          currentButton[0].classList.add('keydown') // имитация нажатия кнопки на экранной клавиатуре
-
-          if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
-            nextButton[0].classList.add('selected-button')
-          } else {
-            spaceButton[0].classList.add('selected-button')
-          }
-
-          if (prevButton.length > 0) { //проверка для удаления подсветки на предыдущей кнопке
-            prevButton[0].classList.remove('selected-button')
-          } else {
-            spaceButton[0].classList.remove('selected-button')
-          }
-
-          charCounter++
-
-          if (this.state.inputValue == this.state.exampleLine.join(' ')) {
-            spaceButton[0].classList.remove('selected-button') // если строка инпута равна строке-примеру
-            charCounter = 0                                    // обнуляем счетчик
-            this.setState({inputValue: ''})                    // cбрасываем инпут
-            if (this.state.mode == 'beginner') {               // в зависимости от режима вызываем
-              this.beginnerModeLineGenerator()                 // необходимый метод
-            } else if (this.state.mode == 'advanced') {
-              this.advancedModeLineGenerator()
-            }
-          }
-        }
-      })
 
     let mode = Rx.Observable.fromEvent(document.getElementsByName('mode'), 'click')
       mode.subscribe(e => {
         if (e.target.value == 'beginner') {
-          this.setState({inputValue: ''})
-          charCounter = 0
+          this.setState({
+            inputValue: '',
+            charCounter: 0
+          })
+
           this.beginnerModeLineGenerator()
         } else if (e.target.value == 'advanced') {
-          this.setState({inputValue: ''})
-          charCounter = 0
+          this.setState({
+            inputValue: '',
+            charCounter: 0
+          })
           this.advancedModeLineGenerator()
         }
       })
