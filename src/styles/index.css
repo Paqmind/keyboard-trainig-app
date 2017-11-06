@@ -13,6 +13,12 @@ body {
   font-family: Arial;
 }
 
+.example-line-wrapper {
+  width: 775px;
+  margin: 0 auto;
+  text-align: left;
+}
+
 .example-line {
   width: 775px;
   height: 25px;
@@ -21,6 +27,10 @@ body {
   font-family: Arial;
   vertical-align: baseline;
   text-align: left;
+}
+
+.pressed-button {
+  background-color: yellow;
 }
 
 #keyboard {

@@ -92,6 +92,13 @@ class Main extends Component {
     firstChar[0].classList.add('selected-button')
   }
 
+  exampleLineSelectingCleaner = () => { // снятие выделения строки-примера желтым цветом
+    let selectedExampleLineChar = document.getElementsByClassName('example-line')
+    for (let i = 0; i < selectedExampleLineChar.length; i++) {
+      selectedExampleLineChar[i].classList.remove('pressed-button')
+    }
+  }
+
   keyDownButtonHandler = () => {
     let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keydown')
     keyDown.subscribe(e => {
@@ -99,12 +106,14 @@ class Main extends Component {
       console.log(exampleLine)
       let nextButton = document.getElementsByClassName(exampleLine.join(' ').split('')[charCounter + 1]),
         prevButton = document.getElementsByClassName(exampleLine.join(' ').split('')[charCounter]),
+        selectedExampleLineChar = document.getElementsByClassName('example-line'),
         spaceButton = document.getElementsByClassName('spacebar'),
         currentButton = document.getElementsByClassName(e.keyCode)
 
       if (e.key == exampleLine.join(' ').split('')[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
         this.setState({inputValue: inputValue + e.key}) //если соответствует отображаем в строке инпута
         currentButton[0].classList.add('keydown') // имитация нажатия кнопки на экранной клавиатуре
+        selectedExampleLineChar[charCounter].classList.add('pressed-button') // выделение в строке-примере набранных символов желтым цветом
 
         if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
           nextButton[0].classList.add('selected-button')
@@ -122,6 +131,7 @@ class Main extends Component {
 
         if (this.state.inputValue == exampleLine.join(' ')) {
           spaceButton[0].classList.remove('selected-button') // если строка инпута равна строке-примеру
+          this.exampleLineSelectingCleaner()
           this.setState({
             charCounter: 0,                                  // обнуляем счетчик
             inputValue: ''                                   // сбрасываем инпут
