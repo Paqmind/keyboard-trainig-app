@@ -12,6 +12,7 @@ class Main extends Component {
     let { words } = this.props.words //массив слов из words.json файла
     this.state = {
       inputValue: '',
+      timerValue: 0,
       exampleLine: [],
       mode: 'beginner',
       wordsStore: words,
@@ -29,6 +30,7 @@ class Main extends Component {
       if (e == '') { // переключение режима доступно только при пустой строке ввода
         beginnerButton.disabled = false
         advancedButton.disabled = false
+        this.setState({ timerValue: 0 })
       } else {
         beginnerButton.disabled = true // когда строка ввода НЕ пуста
         advancedButton.disabled = true // radioButtons задизейблены
@@ -96,6 +98,34 @@ class Main extends Component {
     let selectedExampleLineChar = document.getElementsByClassName('example-line')
     for (let i = 0; i < selectedExampleLineChar.length; i++) {
       selectedExampleLineChar[i].classList.remove('pressed-button')
+    }
+  }
+
+  timer = () => {
+    let interval = setInterval(() => {
+      let { timerValue } = this.state
+      this.setState({ timerValue: ++timerValue })
+
+      if (timerValue > 60) {
+        this.setState({ timerValue: Infinity })
+      }
+    }, 1000)
+  }
+
+  timerClassListSetter = () => {
+    let { timerValue } = this.state
+    let timer = document.getElementById('timer')
+
+    if (timerValue < 10) {
+      timer.classList.contains('timer-color-green') ? null : timer.classList.add('timer-color-green')
+      timer.classList.remove('timer-color-yellow')
+      timer.classList.remove('timer-color-red')
+    } else if (timerValue >= 10 && timerValue <= 20) {
+      timer.classList.remove('timer-color-green')
+      timer.classList.add('timer-color-yellow')
+    } else if (timerValue > 20) {
+      timer.classList.remove('timer-color-yellow')
+      timer.classList.add('timer-color-red')
     }
   }
 
@@ -169,13 +199,18 @@ class Main extends Component {
     this.modeSwitcher()
     this.keyDownButtonHandler()
     this.kyeUpButtonHandler()
+    this.timer()
+  }
+
+  componentDidUpdate() {
+    this.timerClassListSetter()
   }
 
 
   render() {
-    let { inputValue, exampleLine } = this.state;
+    let { inputValue, exampleLine, timerValue } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)} />
+      <OptionalBar handler={e => this.modeSwitcher(e)} timer={timerValue} />
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />
       <Keyboard />
