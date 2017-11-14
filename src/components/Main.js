@@ -1,20 +1,20 @@
-import React, { Component } from 'react'
-import Rx from 'rxjs'
-import OptionalBar from './OptionalBar'
-import Input from './Input'
-import ExampleLine from './ExampleLine'
-import Keyboard from './Keyboard'
-import '../styles/index.css'
+import React, { Component } from "react"
+import Rx from "rxjs"
+import OptionalBar from "./OptionalBar"
+import Input from "./Input"
+import ExampleLine from "./ExampleLine"
+import Keyboard from "./Keyboard"
+import "../styles/index.css"
 
 class Main extends Component {
   constructor(props) {
     super(props)
     let { words } = this.props.words //массив слов из words.json файла
     this.state = {
-      inputValue: '',
+      inputValue: "",
       timerValue: 0,
       exampleLine: [],
-      mode: 'beginner',
+      mode: "beginner",
       wordsStore: words,
       charCounter: 0 // счетчик для побуквенного сравнения инпута и строки-примера
     }
@@ -24,10 +24,10 @@ class Main extends Component {
   inputOnChange = () => {
     let defaultValue = Rx.Observable.of(this.state.inputValue)
     defaultValue.subscribe(e => {
-      let beginnerButton = document.getElementById('beginner') // radioButtons для
-      let advancedButton = document.getElementById('advanced') // переключения режима
+      let beginnerButton = document.getElementById("beginner") // radioButtons для
+      let advancedButton = document.getElementById("advanced") // переключения режима
 
-      if (e == '') { // переключение режима доступно только при пустой строке ввода
+      if (e == "") { // переключение режима доступно только при пустой строке ввода
         beginnerButton.disabled = false
         advancedButton.disabled = false
         this.setState({ timerValue: 0 })
@@ -39,25 +39,25 @@ class Main extends Component {
   }
 
   modeSwitcher = () => {
-    let mode = Rx.Observable.fromEvent(document.getElementsByName('mode'), 'change')
+    let mode = Rx.Observable.fromEvent(document.getElementsByName("mode"), "change")
     mode.subscribe(e => {
-      let firstChar = document.getElementsByClassName(this.state.exampleLine.join(' ').split('')[0])
+      let firstChar = document.getElementsByClassName(this.state.exampleLine.join(" ").split("")[0])
       this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
 
-      if (e.target.value == 'beginner') {
+      if (e.target.value == "beginner") {
         this.setState({
-          inputValue: '',
+          inputValue: "",
           charCounter: 0
         })
-        firstChar[0].classList.remove('selected-button') // удаление выделеной кнопки строки-примера из предыдущего состояния
+        firstChar[0].classList.remove("selected-button") // удаление выделеной кнопки строки-примера из предыдущего состояния
         this.beginnerModeLineGenerator()
         this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
-      } else if (e.target.value == 'advanced') {
+      } else if (e.target.value == "advanced") {
         this.setState({
-          inputValue: '',
+          inputValue: "",
           charCounter: 0
         })
-        firstChar[0].classList.remove('selected-button')
+        firstChar[0].classList.remove("selected-button")
         this.advancedModeLineGenerator()
         this.firstCharButtonSelect()
       }
@@ -69,7 +69,7 @@ class Main extends Component {
     let beginnerExampleLine = []
     let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
     for (let i = 0; i < 50; i++) {
-      if (beginnerExampleLine.join(' ').length <= 60) {
+      if (beginnerExampleLine.join(" ").length <= 60) {
         beginnerExampleLine.push(randomWord)
       }
     }
@@ -81,7 +81,7 @@ class Main extends Component {
     let advancedExampleLine = []
     for (let i = 0; i < 50; i++) {
       let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
-      if (advancedExampleLine.join(' ').length <= 60) {
+      if (advancedExampleLine.join(" ").length <= 60) {
         advancedExampleLine.push(randomWord)
       }
     }
@@ -90,14 +90,14 @@ class Main extends Component {
 
   firstCharButtonSelect = () => {
     let { exampleLine, charCounter } = this.state
-    let firstChar = document.getElementsByClassName(exampleLine.join(' ').split('')[charCounter])
-    firstChar[0].classList.add('selected-button')
+    let firstChar = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter])
+    firstChar[0].classList.add("selected-button")
   }
 
   exampleLineSelectingCleaner = () => { // снятие выделения строки-примера желтым цветом
-    let selectedExampleLineChar = document.getElementsByClassName('example-line')
+    let selectedExampleLineChar = document.getElementsByClassName("example-line")
     for (let i = 0; i < selectedExampleLineChar.length; i++) {
-      selectedExampleLineChar[i].classList.remove('pressed-button')
+      selectedExampleLineChar[i].classList.remove("pressed-button")
     }
   }
 
@@ -114,62 +114,61 @@ class Main extends Component {
 
   timerClassListSetter = () => {
     let { timerValue } = this.state
-    let timer = document.getElementById('timer')
+    let timer = document.getElementById("timer")
 
     if (timerValue < 10) {
-      timer.classList.contains('timer-color-green') ? null : timer.classList.add('timer-color-green')
-      timer.classList.remove('timer-color-yellow')
-      timer.classList.remove('timer-color-red')
+      timer.classList.contains("timer-color-green") ? null : timer.classList.add("timer-color-green")
+      timer.classList.remove("timer-color-yellow")
+      timer.classList.remove("timer-color-red")
     } else if (timerValue > 10 && timerValue <= 20) {
-      timer.classList.remove('timer-color-green')
-      timer.classList.add('timer-color-yellow')
+      timer.classList.remove("timer-color-green")
+      timer.classList.add("timer-color-yellow")
     } else if (timerValue > 20) {
-      timer.classList.remove('timer-color-yellow')
-      timer.classList.add('timer-color-red')
+      timer.classList.remove("timer-color-yellow")
+      timer.classList.add("timer-color-red")
     }
   }
 
   keyDownButtonHandler = () => {
-    let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keydown')
+    let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName("input"), "keydown")
     keyDown.subscribe(e => {
       let { inputValue, exampleLine, mode, charCounter } = this.state
-      console.log(exampleLine)
-      let nextButton = document.getElementsByClassName(exampleLine.join(' ').split('')[charCounter + 1]),
-        prevButton = document.getElementsByClassName(exampleLine.join(' ').split('')[charCounter]),
-        selectedExampleLineChar = document.getElementsByClassName('example-line'),
-        spaceButton = document.getElementsByClassName('spacebar'),
+      let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
+        prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
+        selectedExampleLineChar = document.getElementsByClassName("example-line"),
+        spaceButton = document.getElementsByClassName("spacebar"),
         currentButton = document.getElementsByClassName(e.keyCode)
 
-      if (e.key == exampleLine.join(' ').split('')[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
+      if (e.key == exampleLine.join(" ").split("")[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
         this.setState({ inputValue: inputValue + e.key }) //если соответствует отображаем в строке инпута
-        currentButton[0].classList.add('keydown') // имитация нажатия кнопки на экранной клавиатуре
-        selectedExampleLineChar[charCounter].classList.add('pressed-button') // выделение в строке-примере набранных символов желтым цветом
+        currentButton[0].classList.add("keydown") // имитация нажатия кнопки на экранной клавиатуре
+        selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов желтым цветом
 
         if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
-          nextButton[0].classList.add('selected-button')
+          nextButton[0].classList.add("selected-button")
         } else {
-          spaceButton[0].classList.add('selected-button')
+          spaceButton[0].classList.add("selected-button")
         }
 
         if (prevButton.length > 0 && prevButton != nextButton) { //проверка для удаления подсветки на предыдущей кнопке
-          prevButton[0].classList.remove('selected-button')
+          prevButton[0].classList.remove("selected-button")
         } else {
-          spaceButton[0].classList.remove('selected-button')
+          spaceButton[0].classList.remove("selected-button")
         }
 
         this.setState({ charCounter: charCounter + 1 })
 
-        if (this.state.inputValue == exampleLine.join(' ')) {
-          spaceButton[0].classList.remove('selected-button') // если строка инпута равна строке-примеру
+        if (this.state.inputValue == exampleLine.join(" ")) {
+          spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
           this.exampleLineSelectingCleaner()
           this.setState({
             charCounter: 0,                                  // обнуляем счетчик
-            inputValue: ''                                   // сбрасываем инпут
+            inputValue: ""                                   // сбрасываем инпут
           })
-          if (mode == 'beginner') {                          // в зависимости от режима вызываем
+          if (mode == "beginner") {                          // в зависимости от режима вызываем
             this.beginnerModeLineGenerator()                 // необходимый метод
             this.firstCharButtonSelect()
-          } else if (mode == 'advanced') {
+          } else if (mode == "advanced") {
             this.advancedModeLineGenerator()
             this.firstCharButtonSelect()
           }
@@ -179,15 +178,15 @@ class Main extends Component {
   }
 
   kyeUpButtonHandler = () => {
-    let keyUp = Rx.Observable.fromEvent(document.getElementsByClassName('input'), 'keyup')
+    let keyUp = Rx.Observable.fromEvent(document.getElementsByClassName("input"), "keyup")
     keyUp.subscribe(e => {
       let currentButton = document.getElementsByClassName(e.keyCode)
-      currentButton[0].classList.remove('keydown') //завершение имитации нажатия клавиши на экранной клавиатуре
+      currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
     })
   }
 
   componentWillMount() {
-    if (this.state.mode == 'beginner') {
+    if (this.state.mode == "beginner") {
       this.beginnerModeLineGenerator()
     } else if (this.state.mode) {
       this.advancedModeLineGenerator()
@@ -210,7 +209,7 @@ class Main extends Component {
   render() {
     let { inputValue, exampleLine, timerValue } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)} timer={timerValue} />
+      <OptionalBar handler={e => this.modeSwitcher(e)} timer={timerValue}/>
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />
       <Keyboard />
