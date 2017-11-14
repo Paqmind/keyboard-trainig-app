@@ -120,7 +120,7 @@ class Main extends Component {
       timer.classList.contains('timer-color-green') ? null : timer.classList.add('timer-color-green')
       timer.classList.remove('timer-color-yellow')
       timer.classList.remove('timer-color-red')
-    } else if (timerValue >= 10 && timerValue <= 20) {
+    } else if (timerValue > 10 && timerValue <= 20) {
       timer.classList.remove('timer-color-green')
       timer.classList.add('timer-color-yellow')
     } else if (timerValue > 20) {

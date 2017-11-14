@@ -1,25 +1,25 @@
 import React from 'react'
 
 const Keyboard = () => {
-  return     <div id="keyboard">
+  return <div id="keyboard">
     <ul className="cf" id="numbers">
-      <li><a href="#" className="key 192"><b>~</b><span>`</span></a></li>
-      <li><a href="#" className="key 49"><b>!</b><span>1</span></a></li>
-      <li><a href="#" className="key 50"><b>@</b><span>2</span></a></li>
-      <li><a href="#" className="key 51"><b>#</b><span>3</span></a></li>
-      <li><a href="#" className="key 52"><b>$</b><span>4</span></a></li>
-      <li><a href="#" className="key 53"><b>%</b><span>5</span></a></li>
-      <li><a href="#" className="key 54"><b>^</b><span>6</span></a></li>
-      <li><a href="#" className="key 55"><b>&amp;</b><span>7</span></a></li>
-      <li><a href="#" className="key 56"><b>*</b><span>8</span></a></li>
-      <li><a href="#" className="key 57"><b>(</b><span>9</span></a></li>
-      <li><a href="#" className="key 48"><b>)</b><span>0</span></a></li>
-      <li><a href="#" className="key 189 alt"><b>_</b><span>-</span></a></li>
-      <li><a href="#" className="key 187"><b>+</b><span>=</span></a></li>
-      <li><a href="#" className="key 46" id="delete"><span>Delete</span></a></li>
+      <li><a href="#" className="key tilda 192"><b>~</b><span>`</span></a></li>
+      <li><a href="#" className="key one 49"><b>!</b><span>1</span></a></li>
+      <li><a href="#" className="key two 50"><b>@</b><span>2</span></a></li>
+      <li><a href="#" className="key three 51"><b>#</b><span>3</span></a></li>
+      <li><a href="#" className="key four 52"><b>$</b><span>4</span></a></li>
+      <li><a href="#" className="key five 53"><b>%</b><span>5</span></a></li>
+      <li><a href="#" className="key six 54"><b>^</b><span>6</span></a></li>
+      <li><a href="#" className="key seven 55"><b>&amp;</b><span>7</span></a></li>
+      <li><a href="#" className="key eight 56"><b>*</b><span>8</span></a></li>
+      <li><a href="#" className="key nine 57"><b>(</b><span>9</span></a></li>
+      <li><a href="#" className="key zero 48"><b>)</b><span>0</span></a></li>
+      <li><a href="#" className="key minus 189 alt"><b>_</b><span>-</span></a></li>
+      <li><a href="#" className="key equals 187"><b>+</b><span>=</span></a></li>
+      <li><a href="#" className="key delete 46" id="delete"><span>Delete</span></a></li>
     </ul>
     <ul className="cf" id="qwerty">
-      <li><a href="#" className="key 9" id="tab"><span>tab</span></a></li>
+      <li><a href="#" className="key tab 9" id="tab"><span>tab</span></a></li>
       <li><a href="#" className="key q 81"><span>q</span></a></li>
       <li><a href="#" className="key w 87"><span>w</span></a></li>
       <li><a href="#" className="key e 69"><span>e</span></a></li>
@@ -30,12 +30,12 @@ const Keyboard = () => {
       <li><a href="#" className="key i 73"><span>i</span></a></li>
       <li><a href="#" className="key o 79"><span>o</span></a></li>
       <li><a href="#" className="key p 80"><span>p</span></a></li>
-      <li><a href="#" className="key 219 alt"><b></b><span>[</span></a></li>
-        <li><a href="#" className="key 221 alt"><b>}</b><span>]</span></a></li>
-      <li><a href="#" className="key 220 alt"><b>|</b><span>\</span></a></li>
+      <li><a href="#" className="key square-bracket 219 alt"><b></b><span>[</span></a></li>
+      <li><a href="#" className="key square-bracket 221 alt"><b>}</b><span>]</span></a></li>
+      <li><a href="#" className="key slash 220 alt"><b>|</b><span>\</span></a></li>
     </ul>
     <ul className="cf" id="asdfg">
-      <li><a href="#" className="key 20 alt" id="caps"><b></b><span>caps lock</span></a></li>
+      <li><a href="#" className="key caps 20 alt" id="caps"><b></b><span>caps lock</span></a></li>
       <li><a href="#" className="key a 65"><span>a</span></a></li>
       <li><a href="#" className="key s 83"><span>s</span></a></li>
       <li><a href="#" className="key d 68"><span>d</span></a></li>
@@ -64,20 +64,20 @@ const Keyboard = () => {
       <li><a href="#" className="key 16 shiftright"><span>Shift</span></a></li>
     </ul>
     <ul className="cf" id="bottomrow">
-      <li><a href="#" className="key" id="fn"><span>fn</span></a></li>
-      <li><a href="#" className="key 17" id="control"><span>control</span></a></li>
+      <li><a href="#" className="key fn" id="fn"><span>fn</span></a></li>
+      <li><a href="#" className="key control 17" id="control"><span>control</span></a></li>
       <li><a href="#" className="key option" id="optionleft"><span>option</span></a></li>
       <li><a href="#" className="key command" id="commandleft"><span>command</span></a></li>
       <li><a href="#" className="key spacebar 32" id="spacebar"><span></span></a></li>
       <li><a href="#" className="key command" id="commandright"><span>command</span></a></li>
       <li><a href="#" className="key option" id="optionright"><span>option</span></a></li>
       <ol className="cf">
-        <li><a href="#" className="key 373" id="left"><span>&#9668;</span></a></li>
+        <li><a href="#" className="key arrow 373" id="left"><span>&#9668;</span></a></li>
         <li>
-          <a href="#" className="key 38" id="up"><span>&#9650;</span></a>
-          <a href="#" className="key 40" id="down"><span>&#9660;</span></a>
+          <a href="#" className="key arrow 38" id="up"><span>&#9650;</span></a>
+          <a href="#" className="key arrow 40" id="down"><span>&#9660;</span></a>
         </li>
-        <li><a href="#" className="key 39" id="right"><span>&#9658;</span></a></li>
+        <li><a href="#" className="key arrow 39" id="right"><span>&#9658;</span></a></li>
       </ol>
     </ul>
   </div>
