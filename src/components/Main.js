@@ -119,12 +119,12 @@ class Main extends Component {
     if (timerValue < 10) {
       timer.classList.contains("timer-color-green") ? null : timer.classList.add("timer-color-green")
       timer.classList.remove("timer-color-yellow")
-      timer.classList.remove("timer-color-red")
-    } else if (timerValue > 10 && timerValue <= 20) {
-      timer.classList.remove("timer-color-green")
-      timer.classList.add("timer-color-yellow")
-    } else if (timerValue > 20) {
-      timer.classList.remove("timer-color-yellow")
+      timer.classList.remove("timer-color-red")         //Таймер меняет цвет
+    } else if (timerValue > 10 && timerValue <= 20) {   //в зависимости от времени
+      timer.classList.remove("timer-color-green")       //0-10сек => зеленый
+      timer.classList.add("timer-color-yellow")         //10-20 => желтый
+    } else if (timerValue > 20) {                       //20-60 => красный
+      timer.classList.remove("timer-color-yellow")      //60+ => infinity
       timer.classList.add("timer-color-red")
     }
   }
