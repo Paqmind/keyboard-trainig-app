@@ -38,25 +38,7 @@ body {
   margin: 0 auto;
   display: flex;
   margin-top: 100px;
-}
-
-#timer {
-  margin-left: 500px;
-  font-weight: bold;
-  font-size: 1.1em;
-  opacity: 0.5;
-}
-
-.timer-color-green {
-  color: green
-}
-
-.timer-color-yellow {
-  color: gold
-}
-
-.timer-color-red {
-  color: red
+  margin-bottom: 5px;
 }
 
 #keyboard {
