@@ -12,7 +12,6 @@ class Main extends Component {
     let { words } = this.props.words //массив слов из words.json файла
     this.state = {
       inputValue: "",
-      timerValue: 0,
       exampleLine: [],
       mode: "beginner",
       wordsStore: words,
@@ -101,34 +100,6 @@ class Main extends Component {
     }
   }
 
-  timer = () => {
-    let interval = setInterval(() => {
-      let { timerValue } = this.state
-      this.setState({ timerValue: ++timerValue })
-
-      if (timerValue > 60) {
-        this.setState({ timerValue: Infinity })
-      }
-    }, 1000)
-  }
-
-  timerClassListSetter = () => {
-    let { timerValue } = this.state
-    let timer = document.getElementById("timer")
-
-    if (timerValue < 10) {
-      timer.classList.contains("timer-color-green") ? null : timer.classList.add("timer-color-green")
-      timer.classList.remove("timer-color-yellow")
-      timer.classList.remove("timer-color-red")         //Таймер меняет цвет
-    } else if (timerValue > 10 && timerValue <= 20) {   //в зависимости от времени
-      timer.classList.remove("timer-color-green")       //0-10сек => зеленый
-      timer.classList.add("timer-color-yellow")         //10-20 => желтый
-    } else if (timerValue > 20) {                       //20-60 => красный
-      timer.classList.remove("timer-color-yellow")      //60+ => infinity
-      timer.classList.add("timer-color-red")
-    }
-  }
-
   keyDownButtonHandler = () => {
     let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName("input"), "keydown")
     keyDown.subscribe(e => {
@@ -198,13 +169,7 @@ class Main extends Component {
     this.modeSwitcher()
     this.keyDownButtonHandler()
     this.kyeUpButtonHandler()
-    this.timer()
   }
-
-  componentDidUpdate() {
-    this.timerClassListSetter()
-  }
-
 
   render() {
     let { inputValue, exampleLine, timerValue } = this.state;

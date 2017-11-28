@@ -8,7 +8,6 @@ const OptianalBar = (props) => {
             <input type="radio" id="advanced" name="mode" value="advanced" onClick={props.handler} />
             <label htmlFor="advanced">advanced</label>
         </div>
-        <div className="timer-color-green" id="timer">Timer: {props.timer}</div>
     </div>
 }
 
