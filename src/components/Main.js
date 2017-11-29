@@ -172,9 +172,9 @@ class Main extends Component {
   }
 
   render() {
-    let { inputValue, exampleLine, timerValue } = this.state;
+    let { inputValue, exampleLine } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)} timer={timerValue}/>
+      <OptionalBar handler={e => this.modeSwitcher(e)}/>
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />
       <Keyboard />
