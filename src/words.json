@@ -845,6 +845,12 @@
     "ego",
     "brainwasher",
     "emperor",
-    "grasshopper"
+    "grasshopper",
+    "subscribe",
+    "delete",
+    "destroy",
+    "case",
+    "taste",
+    "upgrade"
   ]
 }
