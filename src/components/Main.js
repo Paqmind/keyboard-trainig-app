@@ -101,8 +101,7 @@ class Main extends Component {
   }
 
   keyDownButtonHandler = () => {
-    let keyDown = Rx.Observable.fromEvent(document.getElementsByClassName("input"), "keydown")
-    keyDown.subscribe(e => {
+    document.getElementById("input").addEventListener("keydown", (e) => {
       let { inputValue, exampleLine, mode, charCounter } = this.state
       let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
         prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
@@ -148,9 +147,8 @@ class Main extends Component {
     })
   }
 
-  kyeUpButtonHandler = () => {
-    let keyUp = Rx.Observable.fromEvent(document.getElementsByClassName("input"), "keyup")
-    keyUp.subscribe(e => {
+  keyUpButtonHandler = () => {
+    document.getElementById("input").addEventListener('keyup', (e) => {
       let currentButton = document.getElementsByClassName(e.keyCode)
       currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
     })
@@ -168,7 +166,7 @@ class Main extends Component {
     this.firstCharButtonSelect()
     this.modeSwitcher()
     this.keyDownButtonHandler()
-    this.kyeUpButtonHandler()
+    this.keyUpButtonHandler()
   }
 
   render() {
