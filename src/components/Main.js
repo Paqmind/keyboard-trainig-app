@@ -19,7 +19,7 @@ class Main extends Component {
   }
 
   modeSwitcher = () => {
-    document.getElementById("mode").addEventListener("change", (e) => {
+    document.getElementById("mode").addEventListener("change", e => {
       let firstChar = document.getElementsByClassName(this.state.exampleLine.join(" ").split("")[0])
       this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
 
@@ -45,15 +45,6 @@ class Main extends Component {
         this.exampleLineSelectingCleaner()
       }
     })
-  }
-
-  selectedButtonsCleaner = () => {
-    let buttons = document.getElementsByClassName("key")
-    for (let i = 0; i < buttons.length; i++) {
-      if (buttons[i].classList.contains("selected-button")) {
-        buttons[i].classList.remove("selected-button")
-      }
-    }
   }
 
   beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
@@ -93,8 +84,17 @@ class Main extends Component {
     }
   }
 
+  selectedButtonsCleaner = () => {
+    let buttons = document.getElementsByClassName("key")
+    for (let i = 0; i < buttons.length; i++) {
+      if (buttons[i].classList.contains("selected-button")) {
+        buttons[i].classList.remove("selected-button")
+      }
+    }
+  }
+
   keyDownButtonHandler = () => {
-    document.getElementById("input").addEventListener("keydown", (e) => {
+    document.getElementById("input").addEventListener("keydown", e => {
       let { inputValue, exampleLine, mode, charCounter } = this.state
       let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
         prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
@@ -141,7 +141,7 @@ class Main extends Component {
   }
 
   keyUpButtonHandler = () => {
-    document.getElementById("input").addEventListener('keyup', (e) => {
+    document.getElementById("input").addEventListener('keyup', e => {
       let currentButton = document.getElementsByClassName(e.keyCode)
       currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
     })
@@ -150,7 +150,7 @@ class Main extends Component {
   componentWillMount() {
     if (this.state.mode == "beginner") {
       this.beginnerModeLineGenerator()
-    } else if (this.state.mode) {
+    } else if (this.state.mode =="advanced") {
       this.advancedModeLineGenerator()
     }
   }
