@@ -20,7 +20,7 @@ class Main extends Component {
   }
 
 
-  inputOnChange = () => {
+  /*inputOnChange = () => {
     let defaultValue = Rx.Observable.of(this.state.inputValue)
     defaultValue.subscribe(e => {
       let beginnerButton = document.getElementById("beginner") // radioButtons для
@@ -35,11 +35,10 @@ class Main extends Component {
         advancedButton.disabled = true // radioButtons задизейблены
       }
     })
-  }
+  }*/
 
   modeSwitcher = () => {
-    let mode = Rx.Observable.fromEvent(document.getElementsByName("mode"), "change")
-    mode.subscribe(e => {
+    document.getElementById("mode").addEventListener("change", (e) => {
       let firstChar = document.getElementsByClassName(this.state.exampleLine.join(" ").split("")[0])
       this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
 
@@ -49,18 +48,31 @@ class Main extends Component {
           charCounter: 0
         })
         firstChar[0].classList.remove("selected-button") // удаление выделеной кнопки строки-примера из предыдущего состояния
+        this.selectedButtonsCleaner()
         this.beginnerModeLineGenerator()
         this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
+        this.exampleLineSelectingCleaner()
       } else if (e.target.value == "advanced") {
         this.setState({
           inputValue: "",
           charCounter: 0
         })
         firstChar[0].classList.remove("selected-button")
+        this.selectedButtonsCleaner()
         this.advancedModeLineGenerator()
         this.firstCharButtonSelect()
+        this.exampleLineSelectingCleaner()
       }
     })
+  }
+
+  selectedButtonsCleaner = () => {
+    let buttons = document.getElementsByClassName("key")
+    for (let i = 0; i < buttons.length; i++) {
+      if (buttons[i].classList.contains("selected-button")) {
+        buttons[i].classList.remove("selected-button")
+      }
+    }
   }
 
   beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
