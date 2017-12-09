@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import Rx from "rxjs"
 import OptionalBar from "./OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./ExampleLine"
@@ -18,24 +17,6 @@ class Main extends Component {
       charCounter: 0 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
-
-
-  /*inputOnChange = () => {
-    let defaultValue = Rx.Observable.of(this.state.inputValue)
-    defaultValue.subscribe(e => {
-      let beginnerButton = document.getElementById("beginner") // radioButtons для
-      let advancedButton = document.getElementById("advanced") // переключения режима
-
-      if (e == "") { // переключение режима доступно только при пустой строке ввода
-        beginnerButton.disabled = false
-        advancedButton.disabled = false
-        this.setState({ timerValue: 0 })
-      } else {
-        beginnerButton.disabled = true // когда строка ввода НЕ пуста
-        advancedButton.disabled = true // radioButtons задизейблены
-      }
-    })
-  }*/
 
   modeSwitcher = () => {
     document.getElementById("mode").addEventListener("change", (e) => {
