@@ -20,25 +20,16 @@ class Main extends Component {
 
   modeSwitcher = () => {
     document.getElementById("mode").addEventListener("change", e => {
-      let firstChar = document.getElementsByClassName(this.state.exampleLine.join(" ").split("")[0])
       this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
 
       if (e.target.value == "beginner") {
-        this.setState({
-          inputValue: "",
-          charCounter: 0
-        })
-        firstChar[0].classList.remove("selected-button") // удаление выделеной кнопки строки-примера из предыдущего состояния
+        this.setState({ inputValue: "", charCounter: 0 })
         this.selectedButtonsCleaner()
         this.beginnerModeLineGenerator()
         this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
         this.exampleLineSelectingCleaner()
       } else if (e.target.value == "advanced") {
-        this.setState({
-          inputValue: "",
-          charCounter: 0
-        })
-        firstChar[0].classList.remove("selected-button")
+        this.setState({ inputValue: "", charCounter: 0 })
         this.selectedButtonsCleaner()
         this.advancedModeLineGenerator()
         this.firstCharButtonSelect()
