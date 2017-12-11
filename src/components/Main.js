@@ -157,6 +157,7 @@ class Main extends Component {
     let { inputValue, exampleLine } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
       <OptionalBar handler={e => this.modeSwitcher(e)}/>
+      <div className="divider"></div>
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />
       <Keyboard />

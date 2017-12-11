@@ -11,6 +11,14 @@ body {
   height: 25px;
   font-size: 1.3em;
   font-family: Arial;
+  margin-top: 40px;
+  border: 2px solid #87CEEB;
+}
+
+.input:focus {
+  border: none;
+  border-bottom: 1px dotted black;
+  outline: none;
 }
 
 .example-line-wrapper {
@@ -30,21 +38,19 @@ body {
 }
 
 .pressed-button {
-  background-color: #87CEEB;
+  opacity: 0.15;
 }
 
 .optional-bar {
   width: 775px;
   margin: 0 auto;
   display: flex;
-  margin-top: 100px;
-  margin-bottom: 5px;
-
+  margin-top: 50px;
 }
 
 #keyboard {
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 15vh;
   width: 794px;
   height: 280px;
   -moz-border-radius-topleft: 7px 21px;
@@ -55,6 +61,11 @@ body {
   border-top-right-radius: 7px 21px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #e6e6e6;
 }
 
 .container {
@@ -176,7 +187,7 @@ li {
 }
 
 .selected-button {
-  background-color: gray;
+  background-color: #A9A9A9;
 }
 
 .fn span {
