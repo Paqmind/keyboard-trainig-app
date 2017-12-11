@@ -1,4 +1,5 @@
 import React from "react"
+import Speedometer from "../icons/speedometer.png"
 
 const OptionalBar = (props) => {
   return <div className="optional-bar" id="mode">
@@ -10,6 +11,10 @@ const OptionalBar = (props) => {
       <input type="radio" name="radio" value="advanced" onClick={props.handler}/>
       <span className="checkmark"></span>
     </label>
+    <div className="speed">
+      <img src={Speedometer} className="speedometer" alt="character-per-minute"/>
+      <span>{props.charPerMinute}</span>
+    </div>
   </div>
 }
 

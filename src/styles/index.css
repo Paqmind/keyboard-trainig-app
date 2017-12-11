@@ -48,6 +48,16 @@ body {
   margin-top: 50px;
 }
 
+.speed {
+  margin-left: 430px;
+}
+
+.speedometer {
+  width: 25px;
+  height: 20px;
+  margin-right: 10px;
+}
+
 #keyboard {
   margin: 0 auto;
   margin-top: 15vh;
@@ -124,8 +134,8 @@ body {
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
   top: 6px;
-  left: 6px;
-  width: 8px;
+  left: 6.5px;
+  width: 7px;
   height: 8px;
   border-radius: 50%;
   background: white;

@@ -8,13 +8,16 @@ import "../styles/index.css"
 class Main extends Component {
   constructor(props) {
     super(props)
-    let { words } = this.props.words //массив слов из words.json файла
+    let { words } = this.props.words // массив слов из words.json файла
+    this.counter = 0                 // счетчик времени для расчета символов в секунду
+    this.intId = 0                   // интервал для подсчета времени набора одной строки
     this.state = {
       inputValue: "",
       exampleLine: [],
       mode: "beginner",
       wordsStore: words,
-      charCounter: 0 // счетчик для побуквенного сравнения инпута и строки-примера
+      charPerMinute: "--/--",        // колличество символов в минуту
+      charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
 
@@ -28,12 +31,18 @@ class Main extends Component {
         this.beginnerModeLineGenerator()
         this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
         this.exampleLineSelectingCleaner()
+        clearInterval(this.indId)
+        this.intId = 0
+        this.counter = 0
       } else if (e.target.value == "advanced") {
         this.setState({ inputValue: "", charCounter: 0 })
         this.selectedButtonsCleaner()
         this.advancedModeLineGenerator()
         this.firstCharButtonSelect()
         this.exampleLineSelectingCleaner()
+        clearInterval(this.indId)
+        this.intId = 0
+        this.counter = 0
       }
     })
   }
@@ -68,7 +77,7 @@ class Main extends Component {
     firstChar[0].classList.add("selected-button")
   }
 
-  exampleLineSelectingCleaner = () => { // снятие выделения строки-примера желтым цветом
+  exampleLineSelectingCleaner = () => { // снятие выделения уже набранных символов
     let selectedExampleLineChar = document.getElementsByClassName("example-line")
     for (let i = 0; i < selectedExampleLineChar.length; i++) {
       selectedExampleLineChar[i].classList.remove("pressed-button")
@@ -84,6 +93,23 @@ class Main extends Component {
     }
   }
 
+  setCountingInterval = () => {                             // запуск интервала для подсчета времени
+    if (this.intId == 0) {                                  // набора одной строки
+      this.intId = setInterval(() => this.counter++, 1000)
+    }
+  }
+
+  charPerMinuteCounter = () => {                                // отключение интервала
+    let { exampleLine } = this.state                            // и подсчет символов в минуту
+    clearInterval(this.intId)
+    let charsLength = exampleLine.join("").length
+    let time = this.counter
+    let charPerMinute = Math.round((60 / time) * charsLength)
+    this.setState({charPerMinute: charPerMinute})
+    this.intId = 0
+    this.counter = 0
+  }
+
   keyDownButtonHandler = () => {
     document.getElementById("input").addEventListener("keydown", e => {
       let { inputValue, exampleLine, mode, charCounter } = this.state
@@ -96,7 +122,9 @@ class Main extends Component {
       if (e.key == exampleLine.join(" ").split("")[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
         this.setState({ inputValue: inputValue + e.key }) //если соответствует отображаем в строке инпута
         currentButton[0].classList.add("keydown") // имитация нажатия кнопки на экранной клавиатуре
-        selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов желтым цветом
+        selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
+
+        this.setCountingInterval()
 
         if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
           nextButton[0].classList.add("selected-button")
@@ -113,6 +141,7 @@ class Main extends Component {
         this.setState({ charCounter: charCounter + 1 })
 
         if (this.state.inputValue == exampleLine.join(" ")) {
+          this.charPerMinuteCounter()
           spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
           this.exampleLineSelectingCleaner()
           this.setState({
@@ -154,9 +183,9 @@ class Main extends Component {
   }
 
   render() {
-    let { inputValue, exampleLine } = this.state;
+    let { inputValue, exampleLine, charPerMinute } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)}/>
+      <OptionalBar handler={e => this.modeSwitcher(e)} charPerMinute={charPerMinute} />
       <div className="divider"></div>
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />
