@@ -3,6 +3,7 @@ import OptionalBar from "./OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./ExampleLine"
 import Keyboard from "./Keyboard"
+import Footer from './Footer'
 import "../styles/index.css"
 
 class Main extends Component {
@@ -223,6 +224,7 @@ class Main extends Component {
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />
       <Keyboard />
+      <Footer/>
     </div>
   }
 }

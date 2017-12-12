@@ -123,6 +123,20 @@ body {
   background-color: #e6e6e6;
 }
 
+.footer {
+  width: 775px;
+  height: 25px;
+  margin: 0 auto;
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+a {
+  color: #999999;
+}
+
 .container {
   display: block;
   position: relative;
