@@ -1,5 +1,6 @@
 import React from "react"
 import Speedometer from "../icons/speedometer.png"
+import Errors from '../icons/errors.svg'
 
 const OptionalBar = (props) => {
   return <div className="optional-bar" id="mode">
@@ -12,8 +13,10 @@ const OptionalBar = (props) => {
       <span className="checkmark"></span>
     </label>
     <div className="speed">
-      <img src={Speedometer} className="speedometer" alt="character-per-minute"/>
-      <span>{props.charPerMinute}</span>
+      <img src={Speedometer} className="speedometer-image" alt="character-per-minute"/>
+      <span className="stats">{props.charPerMinute}</span>
+      <img src={Errors} className="errors-image" alt="errors" />
+      <span className="stats">{props.errors}</span>
     </div>
   </div>
 }

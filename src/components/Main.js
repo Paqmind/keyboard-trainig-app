@@ -8,43 +8,19 @@ import "../styles/index.css"
 class Main extends Component {
   constructor(props) {
     super(props)
-    let { words } = this.props.words // массив слов из words.json файла
-    this.counter = 0                 // счетчик времени для расчета символов в секунду
     this.intId = 0                   // интервал для подсчета времени набора одной строки
+    this.counter = 0                 // счетчик времени для расчета символов в секунду
+    this.errorsCounter = 0
+    let { words } = this.props.words // массив слов из words.json файла
     this.state = {
       inputValue: "",
       exampleLine: [],
       mode: "beginner",
       wordsStore: words,
       charPerMinute: "--/--",        // колличество символов в минуту
+      errors: "--/--",
       charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
     }
-  }
-
-  modeSwitcher = () => {
-    document.getElementById("mode").addEventListener("change", e => {
-      this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
-
-      if (e.target.value == "beginner") {
-        this.setState({ inputValue: "", charCounter: 0 })
-        this.selectedButtonsCleaner()
-        this.beginnerModeLineGenerator()
-        this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
-        this.exampleLineSelectingCleaner()
-        clearInterval(this.indId)
-        this.intId = 0
-        this.counter = 0
-      } else if (e.target.value == "advanced") {
-        this.setState({ inputValue: "", charCounter: 0 })
-        this.selectedButtonsCleaner()
-        this.advancedModeLineGenerator()
-        this.firstCharButtonSelect()
-        this.exampleLineSelectingCleaner()
-        clearInterval(this.indId)
-        this.intId = 0
-        this.counter = 0
-      }
-    })
   }
 
   beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
@@ -102,12 +78,49 @@ class Main extends Component {
   charPerMinuteCounter = () => {                                // отключение интервала
     let { exampleLine } = this.state                            // и подсчет символов в минуту
     clearInterval(this.intId)
-    let charsLength = exampleLine.join("").length
+    let stringLength = exampleLine.join("").length
     let time = this.counter
-    let charPerMinute = Math.round((60 / time) * charsLength)
+    let charPerMinute = Math.round((60 / time) * stringLength)
     this.setState({charPerMinute: charPerMinute})
     this.intId = 0
     this.counter = 0
+  }
+
+  errorsPerLineCounter = () => {
+    let { exampleLine } = this.state
+    let stringLength = exampleLine.join("").length
+    let errors = this.errorsCounter
+    let errorsPerLine = (errors * 100) / stringLength
+    this.setState({ errors: errorsPerLine.toFixed(2) })
+    this.errorsCounter = 0
+  }
+
+  modeSwitcher = () => {
+    document.getElementById("mode").addEventListener("change", e => {
+      this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
+
+      if (e.target.value == "beginner") {
+        this.setState({ inputValue: "", charCounter: 0 })
+        this.selectedButtonsCleaner()
+        this.beginnerModeLineGenerator()
+        this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
+        this.exampleLineSelectingCleaner()
+        clearInterval(this.intId)
+        this.errorsCounter = 0
+        this.counter = 0
+        this.intId = 0
+      } else if (e.target.value == "advanced") {
+        this.setState({ inputValue: "", charCounter: 0 })
+        this.selectedButtonsCleaner()
+        this.advancedModeLineGenerator()
+        this.firstCharButtonSelect()
+        this.exampleLineSelectingCleaner()
+        clearInterval(this.intId)
+        this.errorsCounter = 0
+        this.counter = 0
+        this.intId = 0
+      }
+    })
   }
 
   keyDownButtonHandler = () => {
@@ -142,6 +155,7 @@ class Main extends Component {
 
         if (this.state.inputValue == exampleLine.join(" ")) {
           this.charPerMinuteCounter()
+          this.errorsPerLineCounter()
           spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
           this.exampleLineSelectingCleaner()
           this.setState({
@@ -156,6 +170,17 @@ class Main extends Component {
             this.firstCharButtonSelect()
           }
         }
+      } else {
+        if (e.keyCode!== 9
+          && e.keyCode !== 16
+          && e.keyCode !== 17
+          && e.keyCode !== 18
+          && e.keyCode !== 20
+          && e.keyCode !== 91) {
+          this.wrongButtonHandler()
+          this.errorsCounter++
+          console.log(this.errorsCounter)
+        }
       }
     })
   }
@@ -165,6 +190,14 @@ class Main extends Component {
       let currentButton = document.getElementsByClassName(e.keyCode)
       currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
     })
+  }
+
+  wrongButtonHandler = () => {
+    document.getElementById("input").style.backgroundColor = 'yellow'
+    let timerId = setTimeout(() => {
+      document.getElementById("input").style.backgroundColor = ""
+      clearTimeout(timerId)
+    }, 300)
   }
 
   componentWillMount() {
@@ -183,9 +216,9 @@ class Main extends Component {
   }
 
   render() {
-    let { inputValue, exampleLine, charPerMinute } = this.state;
+    let { inputValue, exampleLine, charPerMinute, errors } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)} charPerMinute={charPerMinute} />
+      <OptionalBar handler={e => this.modeSwitcher(e)} charPerMinute={charPerMinute} errors={errors} />
       <div className="divider"></div>
       <Input value={inputValue} />
       <ExampleLine value={exampleLine} />

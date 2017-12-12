@@ -11,7 +11,7 @@ body {
   height: 25px;
   font-size: 1.3em;
   font-family: Arial;
-  margin-top: 40px;
+  margin-top: 8vh;
   border: 2px solid #87CEEB;
 }
 
@@ -49,18 +49,63 @@ body {
 }
 
 .speed {
-  margin-left: 430px;
+  margin-left: 400px;
 }
 
-.speedometer {
+.speedometer-image {
   width: 25px;
   height: 20px;
-  margin-right: 10px;
+  margin-right: 5px;
+}
+
+.errors-image {
+  width: 20px;
+  height: 20px;
+  margin-left: 20px;
+  margin-right: 5px;
+}
+
+.stats {
+  line-height: 10px;
+  text-align: center;
+}
+
+.icons-block {
+  width: 775px;
+  height: 25px;
+  margin: 0 auto;
+  margin-top: 10vh;
+  vertical-align: middle;
+}
+
+.icons-container {
+  width: 775px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  position: absolute;
+}
+
+.refresh-icon {
+  right: 50px;
+}
+
+.night-icon {
+  right: 18px;
+}
+
+.icon:hover {
+  cursor: pointer;
 }
 
 #keyboard {
   margin: 0 auto;
-  margin-top: 15vh;
+  margin-top: 10vh;
   width: 794px;
   height: 280px;
   -moz-border-radius-topleft: 7px 21px;
