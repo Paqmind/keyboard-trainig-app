@@ -193,8 +193,8 @@ a {
 /* Style the indicator (dot/circle) */
 .container .checkmark:after {
   top: 6px;
-  left: 6.5px;
-  width: 7px;
+  left: 6.1px;
+  width: 7.5px;
   height: 8px;
   border-radius: 50%;
   background: white;
