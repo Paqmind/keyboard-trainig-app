@@ -26,8 +26,8 @@ class Main extends Component {
 
   beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
     let { wordsStore } = this.state   // и добавляет эту строку в состояние exampleLine
-    let beginnerExampleLine = []
-    let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
+    let beginnerExampleLine = [],
+        randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
     for (let i = 0; i < 50; i++) {
       if (beginnerExampleLine.join(" ").length <= 60) {
         beginnerExampleLine.push(randomWord)
@@ -79,9 +79,9 @@ class Main extends Component {
   charPerMinuteCounter = () => {                                // отключение интервала
     let { exampleLine } = this.state                            // и подсчет символов в минуту
     clearInterval(this.intId)
-    let stringLength = exampleLine.join("").length
-    let time = this.counter
-    let charPerMinute = Math.round((60 / time) * stringLength)
+    let stringLength = exampleLine.join("").length,
+        time = this.counter,
+        charPerMinute = Math.round((60 / time) * stringLength)
     this.setState({charPerMinute: charPerMinute})
     this.intId = 0
     this.counter = 0
@@ -89,9 +89,9 @@ class Main extends Component {
 
   errorsPerLineCounter = () => {
     let { exampleLine } = this.state
-    let stringLength = exampleLine.join("").length
-    let errors = this.errorsCounter
-    let errorsPerLine = (errors * 100) / stringLength
+    let stringLength = exampleLine.join("").length,
+        errors = this.errorsCounter,
+        errorsPerLine = (errors * 100) / stringLength
     this.setState({ errors: errorsPerLine.toFixed(2) })
     this.errorsCounter = 0
   }
