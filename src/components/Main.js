@@ -11,7 +11,7 @@ class Main extends Component {
     super(props)
     this.intId = 0                   // интервал для подсчета времени набора одной строки
     this.counter = 0                 // счетчик времени для расчета символов в секунду
-    this.errorsCounter = 0
+    this.errorsCounter = 0           // счетчик ошибок набора в одной строке
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
       inputValue: "",
@@ -19,13 +19,13 @@ class Main extends Component {
       mode: "beginner",
       wordsStore: words,
       charPerMinute: "--/--",        // колличество символов в минуту
-      errors: "--/--",
+      errors: "--/--",               // колличество ошибок допущенных в одной строке
       charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
 
   beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
-    let { wordsStore } = this.state     // и добавляет эту строку в состояние exampleLine
+    let { wordsStore } = this.state   // и добавляет эту строку в состояние exampleLine
     let beginnerExampleLine = []
     let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
     for (let i = 0; i < 50; i++) {
