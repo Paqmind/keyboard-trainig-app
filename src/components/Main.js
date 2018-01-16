@@ -10,7 +10,7 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.intId = 0                   // интервал для подсчета времени набора одной строки
-    this.counter = 0                 // счетчик времени для расчета символов в секунду
+    this.counter = 1                 // счетчик времени для расчета символов в секунду
     this.errorsCounter = 0           // счетчик ошибок набора в одной строке
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
@@ -77,14 +77,11 @@ class Main extends Component {
   }
 
   charPerMinuteCounter = () => {                                // отключение интервала
-    let { exampleLine } = this.state                            // и подсчет символов в минуту
-    clearInterval(this.intId)
-    let stringLength = exampleLine.join("").length,
+    let { inputValue } = this.state                            // и подсчет символов в минуту
+    let stringLength = inputValue.length,
         time = this.counter,
         charPerMinute = Math.round((60 / time) * stringLength)
     this.setState({charPerMinute: charPerMinute})
-    this.intId = 0
-    this.counter = 0
   }
 
   errorsPerLineCounter = () => {
@@ -93,7 +90,6 @@ class Main extends Component {
         errors = this.errorsCounter,
         errorsPerLine = (errors * 100) / stringLength
     this.setState({ errors: errorsPerLine.toFixed(2) })
-    //this.errorsCounter = 0
   }
 
   modeSwitcher = () => {
@@ -108,7 +104,7 @@ class Main extends Component {
         this.exampleLineSelectingCleaner()
         clearInterval(this.intId)
         this.errorsCounter = 0
-        this.counter = 0
+        this.counter = 1
         this.intId = 0
       } else if (e.target.value == "advanced") {
         this.setState({ inputValue: "", charCounter: 0 })
@@ -118,7 +114,7 @@ class Main extends Component {
         this.exampleLineSelectingCleaner()
         clearInterval(this.intId)
         this.errorsCounter = 0
-        this.counter = 0
+        this.counter = 1
         this.intId = 0
       }
     })
@@ -139,6 +135,7 @@ class Main extends Component {
         selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
 
         this.setCountingInterval()
+        this.charPerMinuteCounter()
 
         if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
           nextButton[0].classList.add("selected-button")
@@ -155,8 +152,10 @@ class Main extends Component {
         this.setState({ charCounter: charCounter + 1 })
 
         if (this.state.inputValue == exampleLine.join(" ")) {
-          this.charPerMinuteCounter()
           this.errorsCounter = 0
+          clearInterval(this.intId)
+          this.intId = 0
+          this.counter = 1
           spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
           this.exampleLineSelectingCleaner()
           this.setState({
