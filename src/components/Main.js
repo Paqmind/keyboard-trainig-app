@@ -18,8 +18,8 @@ class Main extends Component {
       exampleLine: [],
       mode: "beginner",
       wordsStore: words,
-      charPerMinute: "--/--",        // колличество символов в минуту
-      errors: "--/--",               // колличество ошибок допущенных в одной строке
+      charPerMinute: 0,        // количество символов в минуту
+      errors: 0,               // количество ошибок допущенных в одной строке
       charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
@@ -93,7 +93,7 @@ class Main extends Component {
         errors = this.errorsCounter,
         errorsPerLine = (errors * 100) / stringLength
     this.setState({ errors: errorsPerLine.toFixed(2) })
-    this.errorsCounter = 0
+    //this.errorsCounter = 0
   }
 
   modeSwitcher = () => {
@@ -156,7 +156,7 @@ class Main extends Component {
 
         if (this.state.inputValue == exampleLine.join(" ")) {
           this.charPerMinuteCounter()
-          this.errorsPerLineCounter()
+          this.errorsCounter = 0
           spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
           this.exampleLineSelectingCleaner()
           this.setState({
@@ -180,7 +180,7 @@ class Main extends Component {
           && e.keyCode !== 91) {
           this.wrongButtonHandler()
           this.errorsCounter++
-          console.log(this.errorsCounter)
+          this.errorsPerLineCounter()
         }
       }
     })
