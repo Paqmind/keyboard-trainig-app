@@ -19,8 +19,8 @@ class Main extends Component {
       exampleLine: [],
       mode: "beginner",
       wordsStore: words,
-      charPerMinute: 0,        // количество символов в минуту
-      errors: 0,               // количество ошибок допущенных в одной строке
+      charPerMinute: 0,              // количество символов в минуту
+      errors: 0,                     // количество ошибок допущенных в одной строке
       charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
@@ -203,7 +203,7 @@ class Main extends Component {
     currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
   }
 
-  installKeyUpHandler = () => {
+  installKeyUpButtonHandler = () => {
     let input = document.getElementById("input")
     input.addEventListener('keyup', this.keyUpButtonHandler)
     return () => {
@@ -230,7 +230,7 @@ class Main extends Component {
     this.firstCharButtonSelect()
     this.subscriptions.push(this.installModeSwitcherHandler())
     this.subscriptions.push(this.installKeyDownButtonHandler())
-    this.subscriptions.push(this.installKeyUpHandler())
+    this.subscriptions.push(this.installKeyUpButtonHandler())
   }
 
   componentWillUnmount() {
