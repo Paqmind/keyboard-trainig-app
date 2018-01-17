@@ -12,6 +12,7 @@ class Main extends Component {
     this.intId = 0                   // интервал для подсчета времени набора одной строки
     this.counter = 1                 // счетчик времени для расчета символов в секунду
     this.errorsCounter = 0           // счетчик ошибок набора в одной строке
+    this.subscriptions = []          // массив функций removeEventListeners
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
       inputValue: "",
@@ -92,104 +93,122 @@ class Main extends Component {
     this.setState({ errors: errorsPerLine.toFixed(2) })
   }
 
-  modeSwitcher = () => {
-    document.getElementById("mode").addEventListener("change", e => {
-      this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
+  modeSwitcher = (e) => {
+    this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
 
-      if (e.target.value == "beginner") {
-        this.setState({ inputValue: "", charCounter: 0 })
-        this.selectedButtonsCleaner()
-        this.beginnerModeLineGenerator()
-        this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
-        this.exampleLineSelectingCleaner()
-        clearInterval(this.intId)
-        this.errorsCounter = 0
-        this.counter = 1
-        this.intId = 0
-      } else if (e.target.value == "advanced") {
-        this.setState({ inputValue: "", charCounter: 0 })
-        this.selectedButtonsCleaner()
-        this.advancedModeLineGenerator()
-        this.firstCharButtonSelect()
-        this.exampleLineSelectingCleaner()
-        clearInterval(this.intId)
-        this.errorsCounter = 0
-        this.counter = 1
-        this.intId = 0
-      }
-    })
+    if (e.target.value == "beginner") {
+      this.setState({ inputValue: "", charCounter: 0 })
+      this.selectedButtonsCleaner()
+      this.beginnerModeLineGenerator()
+      this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
+      this.exampleLineSelectingCleaner()
+      clearInterval(this.intId)
+      this.errorsCounter = 0
+      this.counter = 1
+      this.intId = 0
+    } else if (e.target.value == "advanced") {
+      this.setState({ inputValue: "", charCounter: 0 })
+      this.selectedButtonsCleaner()
+      this.advancedModeLineGenerator()
+      this.firstCharButtonSelect()
+      this.exampleLineSelectingCleaner()
+      clearInterval(this.intId)
+      this.errorsCounter = 0
+      this.counter = 1
+      this.intId = 0
+    }
   }
 
-  keyDownButtonHandler = () => {
-    document.getElementById("input").addEventListener("keydown", e => {
-      let { inputValue, exampleLine, mode, charCounter } = this.state
-      let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
-        prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
-        selectedExampleLineChar = document.getElementsByClassName("example-line"),
-        spaceButton = document.getElementsByClassName("spacebar"),
-        currentButton = document.getElementsByClassName(e.keyCode)
+  installModeSwitcherHandler = () => {
+    let mode = document.getElementById("mode")
+    mode.addEventListener("change", this.modeSwitcher)
+    return () => {
+      mode.removeEventListener("change", this.modeSwitcher)
+    }
+  }
 
-      if (e.key == exampleLine.join(" ").split("")[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
-        this.setState({ inputValue: inputValue + e.key }) //если соответствует отображаем в строке инпута
-        currentButton[0].classList.add("keydown") // имитация нажатия кнопки на экранной клавиатуре
-        selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
+  keyDownButtonHandler = (e) => {
+    let { inputValue, exampleLine, mode, charCounter } = this.state
+    let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
+      prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
+      selectedExampleLineChar = document.getElementsByClassName("example-line"),
+      spaceButton = document.getElementsByClassName("spacebar"),
+      currentButton = document.getElementsByClassName(e.keyCode)
 
-        this.setCountingInterval()
-        this.charPerMinuteCounter()
+    if (e.key == exampleLine.join(" ").split("")[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
+      this.setState({ inputValue: inputValue + e.key }) //если соответствует отображаем в строке инпута
+      currentButton[0].classList.add("keydown") // имитация нажатия кнопки на экранной клавиатуре
+      selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
 
-        if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
-          nextButton[0].classList.add("selected-button")
-        } else {
-          spaceButton[0].classList.add("selected-button")
-        }
+      this.setCountingInterval()
+      this.charPerMinuteCounter()
 
-        if (prevButton.length > 0 && prevButton != nextButton) { //проверка для удаления подсветки на предыдущей кнопке
-          prevButton[0].classList.remove("selected-button")
-        } else {
-          spaceButton[0].classList.remove("selected-button")
-        }
-
-        this.setState({ charCounter: charCounter + 1 })
-
-        if (this.state.inputValue == exampleLine.join(" ")) {
-          this.errorsCounter = 0
-          clearInterval(this.intId)
-          this.intId = 0
-          this.counter = 1
-          spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
-          this.exampleLineSelectingCleaner()
-          this.setState({
-            charCounter: 0,                                  // обнуляем счетчик
-            inputValue: ""                                   // сбрасываем инпут
-          })
-          if (mode == "beginner") {                          // в зависимости от режима вызываем
-            this.beginnerModeLineGenerator()                 // необходимый метод
-            this.firstCharButtonSelect()
-          } else if (mode == "advanced") {
-            this.advancedModeLineGenerator()
-            this.firstCharButtonSelect()
-          }
-        }
+      if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
+        nextButton[0].classList.add("selected-button")
       } else {
-        if (e.keyCode!== 9
-          && e.keyCode !== 16
-          && e.keyCode !== 17
-          && e.keyCode !== 18
-          && e.keyCode !== 20
-          && e.keyCode !== 91) {
-          this.wrongButtonHandler()
-          this.errorsCounter++
-          this.errorsPerLineCounter()
+        spaceButton[0].classList.add("selected-button")
+      }
+
+      if (prevButton.length > 0 && prevButton != nextButton) { //проверка для удаления подсветки на предыдущей кнопке
+        prevButton[0].classList.remove("selected-button")
+      } else {
+        spaceButton[0].classList.remove("selected-button")
+      }
+
+      this.setState({ charCounter: charCounter + 1 })
+
+      if (this.state.inputValue == exampleLine.join(" ")) {
+        this.errorsCounter = 0
+        clearInterval(this.intId)
+        this.intId = 0
+        this.counter = 1
+        spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
+        this.exampleLineSelectingCleaner()
+        this.setState({
+          charCounter: 0,                                  // обнуляем счетчик
+          inputValue: ""                                   // сбрасываем инпут
+        })
+        if (mode == "beginner") {                          // в зависимости от режима вызываем
+          this.beginnerModeLineGenerator()                 // необходимый метод
+          this.firstCharButtonSelect()
+        } else if (mode == "advanced") {
+          this.advancedModeLineGenerator()
+          this.firstCharButtonSelect()
         }
       }
-    })
+    } else {
+      if (e.keyCode !== 9
+        && e.keyCode !== 16
+        && e.keyCode !== 17
+        && e.keyCode !== 18
+        && e.keyCode !== 20
+        && e.keyCode !== 91) {
+        this.wrongButtonHandler()
+        this.errorsCounter++
+        this.errorsPerLineCounter()
+      }
+    }
   }
 
-  keyUpButtonHandler = () => {
-    document.getElementById("input").addEventListener('keyup', e => {
-      let currentButton = document.getElementsByClassName(e.keyCode)
-      currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
-    })
+  installKeyDownButtonHandler = () => {
+    let input = document.getElementById("input")
+    input.addEventListener("keydown", this.keyDownButtonHandler)
+    return () => {
+      input.removeEventListener("keydown", this.keyDownButtonHandler)
+    }
+  }
+
+  keyUpButtonHandler = (e) => {
+    let currentButton = document.getElementsByClassName(e.keyCode)
+    currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
+  }
+
+  installKeyUpHandler = () => {
+    let input = document.getElementById("input")
+    input.addEventListener('keyup', this.keyUpButtonHandler)
+    return () => {
+      input.removeEventListener('keyup', this.keyUpButtonHandler)
+    }
   }
 
   wrongButtonHandler = () => {
@@ -209,9 +228,15 @@ class Main extends Component {
 
   componentDidMount() {
     this.firstCharButtonSelect()
-    this.modeSwitcher()
-    this.keyDownButtonHandler()
-    this.keyUpButtonHandler()
+    this.subscriptions.push(this.installModeSwitcherHandler())
+    this.subscriptions.push(this.installKeyDownButtonHandler())
+    this.subscriptions.push(this.installKeyUpHandler())
+  }
+
+  componentWillUnmount() {
+    for (let i = 0; i < this.subscriptions.length; i++) {
+      this.subscriptions[i]()
+    }
   }
 
   render() {
