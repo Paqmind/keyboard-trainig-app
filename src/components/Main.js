@@ -194,9 +194,8 @@ class Main extends Component {
 
   wrongButtonHandler = () => {
     document.getElementById("input").style.backgroundColor = 'yellow'
-    let timerId = setTimeout(() => {
+    setTimeout(() => {
       document.getElementById("input").style.backgroundColor = ""
-      clearTimeout(timerId)
     }, 300)
   }
 
