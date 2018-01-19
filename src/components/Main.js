@@ -25,7 +25,7 @@ class Main extends Component {
     }
   }
 
-  beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
+  /*beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
     let { wordsStore } = this.state   // и добавляет эту строку в состояние exampleLine
     let beginnerExampleLine = [],
         randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
@@ -35,9 +35,9 @@ class Main extends Component {
       }
     }
     this.setState({ exampleLine: beginnerExampleLine })
-  }
+  }*/
 
-  advancedModeLineGenerator = () => { // метод генерирует строку из разных случайных слов
+  /*advancedModeLineGenerator = () => { // метод генерирует строку из разных случайных слов
     let { wordsStore } = this.state
     let advancedExampleLine = []
     for (let i = 0; i < 50; i++) {
@@ -47,6 +47,39 @@ class Main extends Component {
       }
     }
     this.setState({ exampleLine: advancedExampleLine })
+  }*/
+
+  beginnerModeLineGenerator = (wordsStore) => {
+    let beginnerExampleLine = [],
+      randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
+    for (let i = 0; i < 50; i++) {
+      if (beginnerExampleLine.join(" ").length <= 60) {
+        beginnerExampleLine.push(randomWord)
+      }
+    }
+    return beginnerExampleLine
+  }
+
+  advancedModeLineGenerator = (wordsStore) => {
+    let advancedExampleLine = []
+    for (let i = 0; i < 50; i++) {
+      let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
+      if (advancedExampleLine.join(" ").length <= 60) {
+        advancedExampleLine.push(randomWord)
+      }
+    }
+    return advancedExampleLine
+  }
+
+  exampleLineInstaller = () => {
+    let { wordsStore, mode } = this.state
+    let exampleLine = []
+    if (mode == 'beginner') {
+      exampleLine = this.beginnerModeLineGenerator(wordsStore)
+    } else if (mode == 'advanced') {
+      exampleLine = this.advancedModeLineGenerator(wordsStore)
+    }
+    this.setState({exampleLine: exampleLine})
   }
 
   firstCharButtonSelect = () => {
@@ -95,11 +128,12 @@ class Main extends Component {
 
   modeSwitcher = (e) => {
     this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
+    this.exampleLineInstaller()
 
     if (e.target.value == "beginner") {
       this.setState({ inputValue: "", charCounter: 0 })
       this.selectedButtonsCleaner()
-      this.beginnerModeLineGenerator()
+      //this.beginnerModeLineGenerator()
       this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
       this.exampleLineSelectingCleaner()
       clearInterval(this.intId)
@@ -109,7 +143,7 @@ class Main extends Component {
     } else if (e.target.value == "advanced") {
       this.setState({ inputValue: "", charCounter: 0 })
       this.selectedButtonsCleaner()
-      this.advancedModeLineGenerator()
+      //this.advancedModeLineGenerator()
       this.firstCharButtonSelect()
       this.exampleLineSelectingCleaner()
       clearInterval(this.intId)
@@ -168,13 +202,15 @@ class Main extends Component {
           charCounter: 0,                                  // обнуляем счетчик
           inputValue: ""                                   // сбрасываем инпут
         })
-        if (mode == "beginner") {                          // в зависимости от режима вызываем
+        this.exampleLineInstaller()
+        this.firstCharButtonSelect()
+        /*if (mode == "beginner") {                          // в зависимости от режима вызываем
           this.beginnerModeLineGenerator()                 // необходимый метод
           this.firstCharButtonSelect()
         } else if (mode == "advanced") {
           this.advancedModeLineGenerator()
           this.firstCharButtonSelect()
-        }
+        }*/
       }
     } else {
       if (e.keyCode !== 9
@@ -219,11 +255,12 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    if (this.state.mode == "beginner") {
+    /*if (this.state.mode == "beginner") {
       this.beginnerModeLineGenerator()
     } else if (this.state.mode =="advanced") {
       this.advancedModeLineGenerator()
-    }
+    }*/
+    this.exampleLineInstaller()
   }
 
   componentDidMount() {
