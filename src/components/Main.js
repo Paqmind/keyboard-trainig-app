@@ -240,12 +240,11 @@ class Main extends Component {
   }
 
   render() {
-    let { inputValue, exampleLine, charPerMinute, errors } = this.state;
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)} charPerMinute={charPerMinute} errors={errors} />
+      <OptionalBar handler={e => this.modeSwitcher(e)} state={this.state} />
       <div className="divider"></div>
-      <Input value={inputValue} />
-      <ExampleLine value={exampleLine} />
+      <Input state={this.state} />
+      <ExampleLine state={this.state} />
       <Keyboard />
       <Footer/>
     </div>

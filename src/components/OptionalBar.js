@@ -14,9 +14,9 @@ const OptionalBar = (props) => {
     </label>
     <div className="speed">
       <img src={Speedometer} className="speedometer-image" alt="character-per-minute"/>
-      <span className="stats">{props.charPerMinute}</span>
+      <span className="stats">{props.state.charPerMinute}</span>
       <img src={Errors} className="errors-image" alt="errors" />
-      <span className="stats">{props.errors}</span>
+      <span className="stats">{props.state.errors}</span>
     </div>
   </div>
 }
