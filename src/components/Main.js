@@ -25,31 +25,7 @@ class Main extends Component {
     }
   }
 
-  /*beginnerModeLineGenerator = () => { // метод генерирует строку из случайного повтоярющегося слова
-    let { wordsStore } = this.state   // и добавляет эту строку в состояние exampleLine
-    let beginnerExampleLine = [],
-        randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
-    for (let i = 0; i < 50; i++) {
-      if (beginnerExampleLine.join(" ").length <= 60) {
-        beginnerExampleLine.push(randomWord)
-      }
-    }
-    this.setState({ exampleLine: beginnerExampleLine })
-  }*/
-
-  /*advancedModeLineGenerator = () => { // метод генерирует строку из разных случайных слов
-    let { wordsStore } = this.state
-    let advancedExampleLine = []
-    for (let i = 0; i < 50; i++) {
-      let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
-      if (advancedExampleLine.join(" ").length <= 60) {
-        advancedExampleLine.push(randomWord)
-      }
-    }
-    this.setState({ exampleLine: advancedExampleLine })
-  }*/
-
-  beginnerModeLineGenerator = (wordsStore) => {
+  beginnerModeLineGenerator = (wordsStore) => { // метод генерирует строку из разных случайных слов
     let beginnerExampleLine = [],
       randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
     for (let i = 0; i < 50; i++) {
@@ -60,7 +36,7 @@ class Main extends Component {
     return beginnerExampleLine
   }
 
-  advancedModeLineGenerator = (wordsStore) => {
+  advancedModeLineGenerator = (wordsStore) => { // метод генерирует строку из случайного повторяющегося слова
     let advancedExampleLine = []
     for (let i = 0; i < 50; i++) {
       let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
@@ -79,7 +55,7 @@ class Main extends Component {
     } else if (mode == 'advanced') {
       exampleLine = this.advancedModeLineGenerator(wordsStore)
     }
-    this.setState({exampleLine: exampleLine})
+    this.setState({ exampleLine })
   }
 
   firstCharButtonSelect = () => {
@@ -110,7 +86,7 @@ class Main extends Component {
     }
   }
 
-  charPerMinuteCounter = () => {                                // отключение интервала
+  /*charPerMinuteCounter = () => {                                // отключение интервала
     let { inputValue } = this.state                            // и подсчет символов в минуту
     let stringLength = inputValue.length,
         time = this.counter,
@@ -124,6 +100,22 @@ class Main extends Component {
         errors = this.errorsCounter,
         errorsPerLine = (errors * 100) / stringLength
     this.setState({ errors: errorsPerLine.toFixed(2) })
+  }*/
+
+  charPerMinuteCounter = (inputValue, counter) => {
+    return Math.round((60 / counter) * inputValue.length)
+  }
+
+  errorsPerLineCounter = (exampleLine, errorsCounter) => {
+    return ((errorsCounter * 100) / exampleLine.join("").length).toFixed(2)
+  }
+
+  statsCounter = () => {
+    let {inputValue, exampleLine} = this.state
+    this.setState({
+      charPerMinute: this.charPerMinuteCounter(inputValue, this.counter),
+      errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
+    })
   }
 
   modeSwitcher = (e) => {
@@ -133,7 +125,6 @@ class Main extends Component {
     if (e.target.value == "beginner") {
       this.setState({ inputValue: "", charCounter: 0 })
       this.selectedButtonsCleaner()
-      //this.beginnerModeLineGenerator()
       this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
       this.exampleLineSelectingCleaner()
       clearInterval(this.intId)
@@ -143,7 +134,6 @@ class Main extends Component {
     } else if (e.target.value == "advanced") {
       this.setState({ inputValue: "", charCounter: 0 })
       this.selectedButtonsCleaner()
-      //this.advancedModeLineGenerator()
       this.firstCharButtonSelect()
       this.exampleLineSelectingCleaner()
       clearInterval(this.intId)
@@ -175,7 +165,8 @@ class Main extends Component {
       selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
 
       this.setCountingInterval()
-      this.charPerMinuteCounter()
+      //this.charPerMinuteCounter()
+      this.statsCounter()
 
       if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
         nextButton[0].classList.add("selected-button")
@@ -204,13 +195,6 @@ class Main extends Component {
         })
         this.exampleLineInstaller()
         this.firstCharButtonSelect()
-        /*if (mode == "beginner") {                          // в зависимости от режима вызываем
-          this.beginnerModeLineGenerator()                 // необходимый метод
-          this.firstCharButtonSelect()
-        } else if (mode == "advanced") {
-          this.advancedModeLineGenerator()
-          this.firstCharButtonSelect()
-        }*/
       }
     } else {
       if (e.keyCode !== 9
@@ -221,7 +205,7 @@ class Main extends Component {
         && e.keyCode !== 91) {
         this.wrongButtonHandler()
         this.errorsCounter++
-        this.errorsPerLineCounter()
+        this.statsInstaller()
       }
     }
   }
@@ -255,11 +239,6 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    /*if (this.state.mode == "beginner") {
-      this.beginnerModeLineGenerator()
-    } else if (this.state.mode =="advanced") {
-      this.advancedModeLineGenerator()
-    }*/
     this.exampleLineInstaller()
   }
 
