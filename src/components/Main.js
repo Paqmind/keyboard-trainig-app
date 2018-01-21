@@ -86,32 +86,16 @@ class Main extends Component {
     }
   }
 
-  /*charPerMinuteCounter = () => {                                // отключение интервала
-    let { inputValue } = this.state                            // и подсчет символов в минуту
-    let stringLength = inputValue.length,
-        time = this.counter,
-        charPerMinute = Math.round((60 / time) * stringLength)
-    this.setState({charPerMinute: charPerMinute})
-  }
-
-  errorsPerLineCounter = () => {
-    let { exampleLine } = this.state
-    let stringLength = exampleLine.join("").length,
-        errors = this.errorsCounter,
-        errorsPerLine = (errors * 100) / stringLength
-    this.setState({ errors: errorsPerLine.toFixed(2) })
-  }*/
-
-  charPerMinuteCounter = (inputValue, counter) => {
+  charPerMinuteCounter = (inputValue, counter) => {          // подсчет символов в минуту
     return Math.round((60 / counter) * inputValue.length)
   }
 
-  errorsPerLineCounter = (exampleLine, errorsCounter) => {
+  errorsPerLineCounter = (exampleLine, errorsCounter) => {   // подсчет ошибок в строке
     return ((errorsCounter * 100) / exampleLine.join("").length).toFixed(2)
   }
 
   statsCounter = () => {
-    let {inputValue, exampleLine} = this.state
+    let  {inputValue, exampleLine } = this.state
     this.setState({
       charPerMinute: this.charPerMinuteCounter(inputValue, this.counter),
       errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
@@ -165,7 +149,6 @@ class Main extends Component {
       selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
 
       this.setCountingInterval()
-      //this.charPerMinuteCounter()
       this.statsCounter()
 
       if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
@@ -205,7 +188,7 @@ class Main extends Component {
         && e.keyCode !== 91) {
         this.wrongButtonHandler()
         this.errorsCounter++
-        this.statsInstaller()
+        this.statsCounter()
       }
     }
   }
