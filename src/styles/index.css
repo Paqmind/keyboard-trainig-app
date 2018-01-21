@@ -6,6 +6,14 @@ body {
   text-align: center;
 }
 
+.mistaken-button {
+  background-color: yellow;
+}
+
+.correct-button {
+  background-color: inherit;
+}
+
 .input {
   width: 775px;
   height: 25px;

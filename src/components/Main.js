@@ -19,6 +19,7 @@ class Main extends Component {
       exampleLine: [],
       mode: "beginner",
       wordsStore: words,
+      wrongButtonPressed: false,
       charPerMinute: 0,              // количество символов в минуту
       errors: 0,                     // количество ошибок допущенных в одной строке
       charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
@@ -150,6 +151,7 @@ class Main extends Component {
 
       this.setCountingInterval()
       this.statsCounter()
+      this.setState({wrongButtonPressed: false})
 
       if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
         nextButton[0].classList.add("selected-button")
@@ -186,9 +188,9 @@ class Main extends Component {
         && e.keyCode !== 18
         && e.keyCode !== 20
         && e.keyCode !== 91) {
-        this.wrongButtonHandler()
         this.errorsCounter++
         this.statsCounter()
+        this.setState({wrongButtonPressed: true})
       }
     }
   }
@@ -212,13 +214,6 @@ class Main extends Component {
     return () => {
       input.removeEventListener('keyup', this.keyUpButtonHandler)
     }
-  }
-
-  wrongButtonHandler = () => {
-    document.getElementById("input").style.backgroundColor = 'yellow'
-    setTimeout(() => {
-      document.getElementById("input").style.backgroundColor = ""
-    }, 300)
   }
 
   componentWillMount() {
