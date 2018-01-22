@@ -55,6 +55,8 @@ class Main extends Component {
       exampleLine = this.beginnerModeLineGenerator(wordsStore)
     } else if (mode == 'advanced') {
       exampleLine = this.advancedModeLineGenerator(wordsStore)
+    } else {
+      exampleLine = []
     }
     this.setState({ exampleLine })
   }
