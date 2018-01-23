@@ -48,19 +48,6 @@ class Main extends Component {
     return advancedExampleLine
   }
 
-  exampleLineInstaller = () => {
-    let { wordsStore, mode } = this.state
-    let exampleLine = []
-    if (mode == 'beginner') {
-      exampleLine = this.beginnerModeLineGenerator(wordsStore)
-    } else if (mode == 'advanced') {
-      exampleLine = this.advancedModeLineGenerator(wordsStore)
-    } else {
-      exampleLine = []
-    }
-    this.setState({ exampleLine })
-  }
-
   firstCharButtonSelect = () => {
     let { exampleLine, charCounter } = this.state
     let firstChar = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter])
@@ -97,14 +84,6 @@ class Main extends Component {
     return ((errorsCounter * 100) / exampleLine.join("").length).toFixed(2)
   }
 
-  statsCounter = () => {
-    let  {inputValue, exampleLine } = this.state
-    this.setState({
-      charPerMinute: this.charPerMinuteCounter(inputValue, this.counter),
-      errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
-    })
-  }
-
   modeSwitcher = (e) => {
     this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
     this.exampleLineInstaller()
@@ -127,14 +106,6 @@ class Main extends Component {
       this.errorsCounter = 0
       this.counter = 1
       this.intId = 0
-    }
-  }
-
-  installModeSwitcherHandler = () => {
-    let mode = document.getElementById("mode")
-    mode.addEventListener("change", this.modeSwitcher)
-    return () => {
-      mode.removeEventListener("change", this.modeSwitcher)
     }
   }
 
@@ -192,8 +163,21 @@ class Main extends Component {
         && e.keyCode !== 91) {
         this.errorsCounter++
         this.statsCounter()
-        this.setState({wrongButtonPressed: true})
+        this.setState({ wrongButtonPressed: true })
       }
+    }
+  }
+
+  keyUpButtonHandler = (e) => {
+    let currentButton = document.getElementsByClassName(e.keyCode)
+    currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
+  }
+
+  installModeSwitcherHandler = () => {
+    let mode = document.getElementById("mode")
+    mode.addEventListener("change", this.modeSwitcher)
+    return () => {
+      mode.removeEventListener("change", this.modeSwitcher)
     }
   }
 
@@ -205,17 +189,33 @@ class Main extends Component {
     }
   }
 
-  keyUpButtonHandler = (e) => {
-    let currentButton = document.getElementsByClassName(e.keyCode)
-    currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
-  }
-
   installKeyUpButtonHandler = () => {
     let input = document.getElementById("input")
     input.addEventListener('keyup', this.keyUpButtonHandler)
     return () => {
       input.removeEventListener('keyup', this.keyUpButtonHandler)
     }
+  }
+
+  statsCounter = () => {
+    let  {inputValue, exampleLine } = this.state
+    this.setState({
+      charPerMinute: this.charPerMinuteCounter(inputValue, this.counter),
+      errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
+    })
+  }
+
+  exampleLineInstaller = () => {
+    let { wordsStore, mode } = this.state
+    let exampleLine = []
+    if (mode == 'beginner') {
+      exampleLine = this.beginnerModeLineGenerator(wordsStore)
+    } else if (mode == 'advanced') {
+      exampleLine = this.advancedModeLineGenerator(wordsStore)
+    } else {
+      exampleLine = []
+    }
+    this.setState({ exampleLine })
   }
 
   componentWillMount() {
