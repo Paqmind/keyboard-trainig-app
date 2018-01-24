@@ -13,6 +13,7 @@ class Main extends Component {
     this.counter = 1                 // счетчик времени для расчета символов в секунду
     this.errorsCounter = 0           // счетчик ошибок набора в одной строке
     this.subscriptions = []          // массив функций removeEventListeners
+    this.exampleLineMaxLength = 15   // максимальное колличество слов в exampleLine
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
       inputValue: "",
@@ -29,7 +30,7 @@ class Main extends Component {
   beginnerModeLineGenerator = (wordsStore) => { // метод генерирует строку из разных случайных слов
     let beginnerExampleLine = [],
       randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < this.exampleLineMaxLength; i++) {
       if (beginnerExampleLine.join(" ").length <= 60) {
         beginnerExampleLine.push(randomWord)
       }
@@ -39,7 +40,7 @@ class Main extends Component {
 
   advancedModeLineGenerator = (wordsStore) => { // метод генерирует строку из случайного повторяющегося слова
     let advancedExampleLine = []
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < this.exampleLineMaxLength; i++) {
       let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
       if (advancedExampleLine.join(" ").length <= 60) {
         advancedExampleLine.push(randomWord)
@@ -228,12 +229,6 @@ class Main extends Component {
     this.subscriptions.push(this.installKeyDownButtonHandler())
     this.subscriptions.push(this.installKeyUpButtonHandler())
   }
-
-  /*componentWillUnmount() {
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i]()
-    }
-  }*/
 
   componentWillUnmount() {
     for (let i of this.subscriptions) {
