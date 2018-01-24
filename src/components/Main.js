@@ -229,9 +229,15 @@ class Main extends Component {
     this.subscriptions.push(this.installKeyUpButtonHandler())
   }
 
-  componentWillUnmount() {
+  /*componentWillUnmount() {
     for (let i = 0; i < this.subscriptions.length; i++) {
       this.subscriptions[i]()
+    }
+  }*/
+
+  componentWillUnmount() {
+    for (let i of this.subscriptions) {
+      i()
     }
   }
 
