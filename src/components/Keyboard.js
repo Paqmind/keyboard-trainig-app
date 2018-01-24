@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Keyboard = () => {
+const Keyboard = props => {
   return <div id="keyboard">
     <ul className="cf" id="numbers">
       <li><a href="#" className="key tilda 192"><b>~</b><span>`</span></a></li>
@@ -19,49 +19,37 @@ const Keyboard = () => {
       <li><a href="#" className="key delete 46" id="delete"><span>Delete</span></a></li>
     </ul>
     <ul className="cf" id="qwerty">
-      <li><a href="#" className="key tab 9" id="tab"><span>tab</span></a></li>
-      <li><a href="#" className="key q 81"><span>q</span></a></li>
-      <li><a href="#" className="key w 87"><span>w</span></a></li>
-      <li><a href="#" className="key e 69"><span>e</span></a></li>
-      <li><a href="#" className="key r 82"><span>r</span></a></li>
-      <li><a href="#" className="key t 84"><span>t</span></a></li>
-      <li><a href="#" className="key y 89"><span>y</span></a></li>
-      <li><a href="#" className="key u 85"><span>u</span></a></li>
-      <li><a href="#" className="key i 73"><span>i</span></a></li>
-      <li><a href="#" className="key o 79"><span>o</span></a></li>
-      <li><a href="#" className="key p 80"><span>p</span></a></li>
-      <li><a href="#" className="key square-bracket 219 alt"><b></b><span>[</span></a></li>
-      <li><a href="#" className="key square-bracket 221 alt"><b>}</b><span>]</span></a></li>
-      <li><a href="#" className="key slash 220 alt"><b>|</b><span>\</span></a></li>
+      {
+        props.state.keyboard[0].map((obj) => {
+          return <li key={obj.code}>
+            <a href="#" className={obj.className} id={obj.id || null}>
+              <span>{obj.caption}</span>
+            </a>
+          </li>
+        })
+      }
     </ul>
     <ul className="cf" id="asdfg">
-      <li><a href="#" className="key caps 20 alt" id="caps"><b></b><span>caps lock</span></a></li>
-      <li><a href="#" className="key a 65"><span>a</span></a></li>
-      <li><a href="#" className="key s 83"><span>s</span></a></li>
-      <li><a href="#" className="key d 68"><span>d</span></a></li>
-      <li><a href="#" className="key f 70"><span>f</span></a></li>
-      <li><a href="#" className="key g 71"><span>g</span></a></li>
-      <li><a href="#" className="key h 72"><span>h</span></a></li>
-      <li><a href="#" className="key j 74"><span>j</span></a></li>
-      <li><a href="#" className="key k 75"><span>k</span></a></li>
-      <li><a href="#" className="key l 76"><span>l</span></a></li>
-      <li><a href="#" className="key 186 alt"><b>:</b><span>;</span></a></li>
-      <li><a href="#" className="key 222 alt"><b>"</b><span>'</span></a></li>
-      <li><a href="#" className="key 13 alt" id="enter"><span>return</span></a></li>
+      {
+        props.state.keyboard[1].map((obj) => {
+          return <li key={obj.code}>
+            <a href="#" className={obj.className} id={obj.id || null}>
+              <span>{obj.caption}</span>
+            </a>
+          </li>
+        })
+      }
     </ul>
     <ul className="cf" id="zxcvb">
-      <li><a href="#" className="key 16 shiftleft"><span>Shift</span></a></li>
-      <li><a href="#" className="key z 90"><span>z</span></a></li>
-      <li><a href="#" className="key x 88"><span>x</span></a></li>
-      <li><a href="#" className="key c 67"><span>c</span></a></li>
-      <li><a href="#" className="key v 86"><span>v</span></a></li>
-      <li><a href="#" className="key b 66"><span>b</span></a></li>
-      <li><a href="#" className="key n 78"><span>n</span></a></li>
-      <li><a href="#" className="key m 77"><span>m</span></a></li>
-      <li><a href="#" className="key 188 alt"><b>&lt;</b><span>,</span></a></li>
-      <li><a href="#" className="key 190 alt"><b>&gt;</b><span>.</span></a></li>
-      <li><a href="#" className="key 191 alt"><b>?</b><span>/</span></a></li>
-      <li><a href="#" className="key 16 shiftright"><span>Shift</span></a></li>
+      {
+        props.state.keyboard[2].map((obj) => {
+          return <li key={obj.code}>
+            <a href="#" className={obj.className} id={obj.id || null}>
+              <span>{obj.caption}</span>
+            </a>
+          </li>
+        })
+      }
     </ul>
     <ul className="cf" id="bottomrow">
       <li><a href="#" className="key fn" id="fn"><span>fn</span></a></li>
