@@ -45,7 +45,7 @@ body {
   text-align: left;
 }
 
-.pressed-button {
+.typed-button {
   opacity: 0.15;
 }
 
@@ -247,7 +247,7 @@ li {
   text-shadow: 0px 1px 0px #f5f5f5;
 }
 
-.key:active, .keydown {
+.key:active, .key-pressed {
   color: #888;
   background: #ebeced;
   margin: 7px 5px 3px;
@@ -263,7 +263,7 @@ li {
   border-top: 1px solid #eee;
 }
 
-.selected-button {
+.key-highlighted {
   background-color: #A9A9A9;
 }
 

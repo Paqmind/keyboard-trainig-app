@@ -56,21 +56,21 @@ class Main extends Component {
   firstCharButtonSelect = () => {
     let { exampleLine, charCounter } = this.state
     let firstChar = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter])
-    firstChar[0].classList.add("selected-button")
+    firstChar[0].classList.add("key-highlighted")
   }
 
   exampleLineSelectingCleaner = () => { // снятие выделения уже набранных символов
     let selectedExampleLineChar = document.getElementsByClassName("example-line")
     for (let i = 0; i < selectedExampleLineChar.length; i++) {
-      selectedExampleLineChar[i].classList.remove("pressed-button")
+      selectedExampleLineChar[i].classList.remove("typed-button")
     }
   }
 
   selectedButtonsCleaner = () => {
     let buttons = document.getElementsByClassName("key")
     for (let i = 0; i < buttons.length; i++) {
-      if (buttons[i].classList.contains("selected-button")) {
-        buttons[i].classList.remove("selected-button")
+      if (buttons[i].classList.contains("key-highlighted")) {
+        buttons[i].classList.remove("key-highlighted")
       }
     }
   }
@@ -124,23 +124,23 @@ class Main extends Component {
 
     if (e.key == exampleLine.join(" ").split("")[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
       this.setState({ inputValue: inputValue + e.key }) //если соответствует отображаем в строке инпута
-      currentButton[0].classList.add("keydown") // имитация нажатия кнопки на экранной клавиатуре
-      selectedExampleLineChar[charCounter].classList.add("pressed-button") // выделение в строке-примере набранных символов
+      currentButton[0].classList.add("key-pressed") // имитация нажатия кнопки на экранной клавиатуре
+      selectedExampleLineChar[charCounter].classList.add("typed-button") // выделение в строке-примере набранных символов
 
       this.setCountingInterval()
       this.statsCounter()
       this.setState({wrongButtonPressed: false})
 
       if (nextButton.length > 0) { //проверка для подсветки следующей кнопки
-        nextButton[0].classList.add("selected-button")
+        nextButton[0].classList.add("key-highlighted")
       } else {
-        spaceButton[0].classList.add("selected-button")
+        spaceButton[0].classList.add("key-highlighted")
       }
 
       if (prevButton.length > 0 && prevButton != nextButton) { //проверка для удаления подсветки на предыдущей кнопке
-        prevButton[0].classList.remove("selected-button")
+        prevButton[0].classList.remove("key-highlighted")
       } else {
-        spaceButton[0].classList.remove("selected-button")
+        spaceButton[0].classList.remove("key-highlighted")
       }
 
       this.setState({ charCounter: charCounter + 1 })
@@ -150,7 +150,7 @@ class Main extends Component {
         clearInterval(this.intId)
         this.intId = 0
         this.counter = 1
-        spaceButton[0].classList.remove("selected-button") // если строка инпута равна строке-примеру
+        spaceButton[0].classList.remove("key-highlighted") // если строка инпута равна строке-примеру
         this.exampleLineSelectingCleaner()
         this.setState({
           charCounter: 0,                                  // обнуляем счетчик
@@ -175,7 +175,7 @@ class Main extends Component {
 
   keyUpButtonHandler = (e) => {
     let currentButton = document.getElementsByClassName(e.keyCode)
-    currentButton[0].classList.remove("keydown") //завершение имитации нажатия клавиши на экранной клавиатуре
+    currentButton[0].classList.remove("key-pressed") //завершение имитации нажатия клавиши на экранной клавиатуре
   }
 
   installModeSwitcherHandler = () => {
