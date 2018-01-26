@@ -18,6 +18,8 @@ class Main extends Component {
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
       keyboard: initialKeyboardState,
+      btnPressed: 0,
+      btnHighlighted: 0,
       inputValue: "",
       exampleLine: [],
       mode: "beginner",
