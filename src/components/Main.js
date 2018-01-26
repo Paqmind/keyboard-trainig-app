@@ -217,7 +217,7 @@ class Main extends Component {
     }
   }*/
 
-  keyUpButtonHandler = () => {
+  keyUpHandler = () => {
     this.setState({btnPressed: 0}) //завершение имитации нажатия клавиши на экранной клавиатуре
   }
 
@@ -237,11 +237,11 @@ class Main extends Component {
     }
   }
 
-  installKeyUpButtonHandler = () => {
+  installKeyUpHandler = () => {
     let input = document.getElementById("input")
-    input.addEventListener('keyup', this.keyUpButtonHandler)
+    input.addEventListener('keyup', this.keyUpHandler)
     return () => {
-      input.removeEventListener('keyup', this.keyUpButtonHandler)
+      input.removeEventListener('keyup', this.keyUpHandler)
     }
   }
 
@@ -274,7 +274,7 @@ class Main extends Component {
     this.firstCharButtonSelect()
     this.subscriptions.push(this.installModeSwitcherHandler())
     this.subscriptions.push(this.installKeyDownHandler())
-    this.subscriptions.push(this.installKeyUpButtonHandler())
+    this.subscriptions.push(this.installKeyUpHandler())
   }
 
   componentWillUnmount() {
