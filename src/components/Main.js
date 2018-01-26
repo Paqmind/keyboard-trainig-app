@@ -19,7 +19,7 @@ class Main extends Component {
     this.state = {
       keyboard: initialKeyboardState,
       btnPressed: 0,
-      btnHighlighted: 0,
+      btnHighlighted: "",
       inputValue: "",
       exampleLine: [],
       mode: "beginner",
