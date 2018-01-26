@@ -1,4 +1,5 @@
 import React from 'react'
+import classNamesGenerator from './btnClassnamesGenerator'
 
 const Keyboard = props => {
   return <div id="keyboard">
@@ -22,7 +23,7 @@ const Keyboard = props => {
       {
         props.state.keyboard[0].map((obj) => {
           return <li key={obj.code}>
-            <a href="#" className={`key ${obj.caption} ${obj.code}`} id={obj.id || null}>
+            <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>
             </a>
           </li>
@@ -33,7 +34,7 @@ const Keyboard = props => {
       {
         props.state.keyboard[1].map((obj) => {
           return <li key={obj.code}>
-            <a href="#" className={`key ${obj.caption} ${obj.code}`} id={obj.id || null}>
+            <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>
             </a>
           </li>
@@ -44,7 +45,7 @@ const Keyboard = props => {
       {
         props.state.keyboard[2].map((obj) => {
           return <li key={obj.code}>
-            <a href="#" className={`key ${obj.caption} ${obj.code}`} id={obj.id || null}>
+            <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>
             </a>
           </li>
