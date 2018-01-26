@@ -119,12 +119,11 @@ class Main extends Component {
     let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
       prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
       selectedExampleLineChar = document.getElementsByClassName("example-line"),
-      spaceButton = document.getElementsByClassName("spacebar"),
-      currentButton = document.getElementsByClassName(e.keyCode)
+      spaceButton = document.getElementsByClassName("spacebar")
 
     if (e.key == exampleLine.join(" ").split("")[charCounter]) { //проверка на соответстиве нажатой клавиши и строки-примера
       this.setState({ inputValue: inputValue + e.key }) //если соответствует отображаем в строке инпута
-      currentButton[0].classList.add("key-pressed") // имитация нажатия кнопки на экранной клавиатуре
+      this.setState({btnPressed: e.keyCode}) // имитация нажатия кнопки на экранной клавиатуре
       selectedExampleLineChar[charCounter].classList.add("typed-button") // выделение в строке-примере набранных символов
 
       this.setCountingInterval()
@@ -173,9 +172,8 @@ class Main extends Component {
     }
   }
 
-  keyUpButtonHandler = (e) => {
-    let currentButton = document.getElementsByClassName(e.keyCode)
-    currentButton[0].classList.remove("key-pressed") //завершение имитации нажатия клавиши на экранной клавиатуре
+  keyUpButtonHandler = () => {
+    this.setState({btnPressed: 0}) //завершение имитации нажатия клавиши на экранной клавиатуре
   }
 
   installModeSwitcherHandler = () => {
