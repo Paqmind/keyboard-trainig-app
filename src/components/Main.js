@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import OptionalBar from "./OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./ExampleLine"
+import exampleLineGenerator from './exampleLineGenerator'
 import Keyboard from "./Keyboard"
 import initialKeyboardState from '../initialKeyboardState'
 import Footer from './Footer'
@@ -32,7 +33,7 @@ class Main extends Component {
     }
   }
 
-  beginnerModeLineGenerator = (wordsStore) => { // метод генерирует строку из разных случайных слов
+  /*beginnerModeLineGenerator = (wordsStore) => { // метод генерирует строку из разных случайных слов
     let beginnerExampleLine = [],
       randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
     for (let i = 0; i < this.state.exampleLineMaxWords; i++) {
@@ -52,7 +53,7 @@ class Main extends Component {
       }
     }
     return advancedExampleLine
-  }
+  }*/
 
   firstCharButtonSelect = () => {
     let { exampleLine, charCounter } = this.state
@@ -91,8 +92,12 @@ class Main extends Component {
   }
 
   modeSwitcher = (e) => {
-    this.setState({ mode: e.target.value }) //изменение состояния при переключении radioButtons
-    this.exampleLineInstaller()
+    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
+    const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+    this.setState({
+      mode: e.target.value,   //изменение режима при переключении radioButtons
+      exampleLine
+    })
 
     if (e.target.value == "beginner") {
       this.setState({ inputValue: "", charCounter: 0 })
@@ -116,7 +121,7 @@ class Main extends Component {
   }
 
   keyDownHandler = (e) => {
-    let { inputValue, exampleLine, charCounter } = this.state
+    let { inputValue, exampleLine, charCounter, mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars } = this.state
     let nextButton = exampleLine.join(" ").split("")[charCounter + 1]
     let selectedExampleLineChar = document.getElementsByClassName("example-line")
 
@@ -143,7 +148,8 @@ class Main extends Component {
           charCounter: 0,                                  // обнуляем счетчик
           inputValue: ""                                   // сбрасываем инпут
         })
-        this.exampleLineInstaller()
+        let exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+        this.setState({ exampleLine })
         this.firstCharButtonSelect()
       }
     } else {
@@ -254,7 +260,7 @@ class Main extends Component {
     })
   }
 
-  exampleLineInstaller = () => {
+  /*exampleLineInstaller = () => {
     let { wordsStore, mode } = this.state
     let exampleLine = []
     if (mode == 'beginner') {
@@ -265,10 +271,12 @@ class Main extends Component {
       exampleLine = []
     }
     this.setState({ exampleLine })
-  }
+  }*/
 
   componentWillMount() {
-    this.exampleLineInstaller()
+    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
+    const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+    this.setState({ exampleLine })
   }
 
   componentDidMount() {
