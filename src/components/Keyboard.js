@@ -53,15 +53,17 @@ const Keyboard = props => {
       }
     </ul>
     <ul className="cf" id="bottomrow">
-      <li><a href="#" className="key fn" id="fn"><span>fn</span></a></li>
-      <li><a href="#" className="key control 17" id="control"><span>control</span></a></li>
-      <li><a href="#" className="key option" id="optionleft"><span>option</span></a></li>
-      <li><a href="#" className="key command" id="commandleft"><span>command</span></a></li>
-      <li><a href="#" className="key spacebar 32" id="spacebar"><span></span></a></li>
-      <li><a href="#" className="key command" id="commandright"><span>command</span></a></li>
-      <li><a href="#" className="key option" id="optionright"><span>option</span></a></li>
+      {
+        props.state.keyboard[3].map((obj) => {
+          return <li key={obj.key}>
+            <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
+              <span>{obj.caption}</span>
+            </a>
+          </li>
+        })
+      }
       <ol className="cf">
-        <li><a href="#" className="key arrow 373" id="left"><span>&#9668;</span></a></li>
+        <li><a href="#" className="key arrow 37" id="left"><span>&#9668;</span></a></li>
         <li>
           <a href="#" className="key arrow 38" id="up"><span>&#9650;</span></a>
           <a href="#" className="key arrow 40" id="down"><span>&#9660;</span></a>
