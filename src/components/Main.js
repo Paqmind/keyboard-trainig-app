@@ -18,7 +18,7 @@ class Main extends Component {
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
       keyboard: initialKeyboardState,
-      btnPressed: 0,
+      btnPressed: null,
       btnHighlighted: null,
       inputValue: "",
       exampleLine: [],
@@ -225,7 +225,7 @@ class Main extends Component {
   }*/
 
   keyUpHandler = () => {
-    this.setState({btnPressed: 0}) //завершение имитации нажатия клавиши на экранной клавиатуре
+    this.setState({btnPressed: null}) //завершение имитации нажатия клавиши на экранной клавиатуре
   }
 
   installModeSwitcherHandler = () => {

@@ -45,12 +45,12 @@ export default [
     {caption: "shift", code: 61, id: "shiftright"},
   ],
   [
-    {caption: "fn", code: null, id: "fn", key: 1},
+    {caption: "fn", code: 0, id: "fn", key: 1},
     {caption: "control", code: 17, id: "control", key: 2},
-    {caption: "option", code: null, id: "optionleft", key: 3},
-    {caption: "command", code: null, id: "commandleft", key: 4},
+    {caption: "option", code: 0, id: "optionleft", key: 3},
+    {caption: "command", code: 0, id: "commandleft", key: 4},
     {caption: " ", className: "spacebar", code: 32, id: "spacebar", key: 5},
-    {caption: "command", code: null, id: "commandright", key: 6},
-    {caption: "option", code: null, id: "optionright", key: 7}
+    {caption: "command", code: 0, id: "commandright", key: 6},
+    {caption: "option", code: 0, id: "optionright", key: 7}
   ]
 ]
