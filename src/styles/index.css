@@ -292,7 +292,8 @@ li {
 
 
 #numbers li .alt b {
-  display: block;margin: 0 0 3px;
+  display: block;
+  margin: 0 0 3px;
 }
 
 #numbers li #delete span {
@@ -316,7 +317,8 @@ li {
 }
 
 #qwerty li .alt b {
-  display: block; margin: 3px 0 0;
+  display: block;
+  margin: 3px 0 0;
 }
 
 #qwerty li .alt span {
@@ -329,12 +331,19 @@ li {
   text-transform: uppercase;
 }
 
-#asdfg li .alt span {
-  margin: 0; text-transform: lowercase;
+#asdfg li .caps span {
+  margin: 0;
+  text-transform: lowercase;
+}
+
+#asdfg li #enter span {
+  margin: 0;
+  text-transform: lowercase;
 }
 
 #asdfg li .alt b {
-  display: block; margin: 3px 0 0;
+  display: block;
+  margin: 3px 0 0;
 }
 
 #asdfg li #caps b {
@@ -367,14 +376,14 @@ li {
   text-transform: uppercase;
 }
 
-#zxcvb li .shiftleft span {
+#zxcvb li #shiftleft span {
   text-align: left;
   margin: 23px 0 0 10px;
   font-size: 7.5pt;
   text-transform: lowercase;
 }
 
-#zxcvb li .shiftright span {
+#zxcvb li #shiftright span {
   text-align: right;
   margin: 23px 10px 0 0;
   font-size: 7.5pt;
@@ -382,7 +391,8 @@ li {
 }
 
 #zxcvb li .alt b {
-  display: block;margin: 4px 0 0;
+  display: block;
+  margin: 4px 0 0;
 }
 
 #zxcvb li .alt span {
@@ -414,7 +424,7 @@ li {
   opacity: 0.5;
 }
 
-.tab, .square-bracket, .slash, .caps, .alt, .shiftleft, .shiftright {
+.tab, #square-bracket, #slash, #caps, #enter, #shiftleft, #shiftright {
   opacity: 0.5;
 }
 
@@ -442,7 +452,7 @@ li {
   width: 85px;
 }
 
-.shiftleft, .shiftright {
+#shiftleft, #shiftright {
   width: 112px;
 }
 
