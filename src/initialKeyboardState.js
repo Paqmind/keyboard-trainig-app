@@ -1,0 +1,47 @@
+export default [
+  [
+    {caption: "tab", pressed: false, hightlighted: false, code: 9, className: "key tab 9", id: "tab"},
+    {caption: "Q", pressed: false, hightlighted: false, code: 81, className: "key q 81"},
+    {caption: "W", pressed: false, hightlighted: false, code: 87, className: "key w 87"},
+    {caption: "E", pressed: false, hightlighted: false, code: 69, className: "key e 69"},
+    {caption: "R", pressed: false, hightlighted: false, code: 82, className: "key r 82"},
+    {caption: "T", pressed: false, hightlighted: false, code: 84, className:"key t 84"},
+    {caption: "Y", pressed: false, hightlighted: false, code: 89, className: "key y 89"},
+    {caption: "U", pressed: false, hightlighted: false, code: 85, className: "key u 85"},
+    {caption: "I", pressed: false, hightlighted: false, code: 73, className: "key i 73"},
+    {caption: "O", pressed: false, hightlighted: false, code: 79, className: "key o 79"},
+    {caption: "P", pressed: false, hightlighted: false, code: 80, className: "key p 80"},
+    {caption: "[", pressed: false, hightlighted: false, code: 219, className: "key square-bracket 219 alt"},
+    {caption: "]", pressed: false, hightlighted: false, code: 221, className: "key square-bracket 221 alt"},
+    {caption: "\\", pressed: false, hightlighted: false, code: 220, className: "key slash 220 alt"}
+  ],
+  [
+    {caption: "caps", pressed: false, hightlighted: false, code: 20, className: "key caps 20 alt", id: "caps"},
+    {caption: "A", pressed: false, hightlighted: false, code: 65, className: "key a 65"},
+    {caption: "S", pressed: false, hightlighted: false, code: 83, className: "key s 83"},
+    {caption: "D", pressed: false, hightlighted: false, code: 68, className: "key d 68"},
+    {caption: "F", pressed: false, hightlighted: false, code: 70, className: "key f 70"},
+    {caption: "G", pressed: false, hightlighted: false, code: 71, className:"key g 71"},
+    {caption: "H", pressed: false, hightlighted: false, code: 72, className: "key h 72"},
+    {caption: "J", pressed: false, hightlighted: false, code: 74, className: "key j 74"},
+    {caption: "K", pressed: false, hightlighted: false, code: 75, className: "key k 75"},
+    {caption: "L", pressed: false, hightlighted: false, code: 76, className: "key l 76"},
+    {caption: ":", pressed: false, hightlighted: false, code: 186, className: "key 186 alt"},
+    {caption: "'", pressed: false, hightlighted: false, code: 222, className: "key 222 alt"},
+    {caption: "return", pressed: false, hightlighted: false, code: 13, className: "key 13 alt", id: "enter"}
+  ],
+  [
+    {caption: "shift", pressed: false, hightlighted: false, code: 16, className: "key 16 shiftleft"},
+    {caption: "Z", pressed: false, hightlighted: false, code: 90, className: "key z 90"},
+    {caption: "X", pressed: false, hightlighted: false, code: 88, className: "key x 88"},
+    {caption: "C", pressed: false, hightlighted: false, code: 67, className: "key c 67"},
+    {caption: "V", pressed: false, hightlighted: false, code: 86, className: "key v 86"},
+    {caption: "B", pressed: false, hightlighted: false, code: 66, className: "key b 66"},
+    {caption: "N", pressed: false, hightlighted: false, code: 78, className: "key n 78"},
+    {caption: "M", pressed: false, hightlighted: false, code: 77, className: "key m 77"},
+    {caption: ",", pressed: false, hightlighted: false, code: 188, className: "key 188 alt"},
+    {caption: ".", pressed: false, hightlighted: false, code: 190, className: "key 190 alt"},
+    {caption: "/", pressed: false, hightlighted: false, code: 191, className: "key 191 alt"},
+    {caption: "shift", pressed: false, hightlighted: false, code: 61, className: "key 16 shiftright"},
+  ]
+]
