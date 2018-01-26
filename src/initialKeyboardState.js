@@ -49,7 +49,7 @@ export default [
     {caption: "control", code: 17, id: "control", key: 2},
     {caption: "option", code: null, id: "optionleft", key: 3},
     {caption: "command", code: null, id: "commandleft", key: 4},
-    {caption: "", className: "spacebar", code: 32, id: "spacebar", key: 5},
+    {caption: " ", className: "spacebar", code: 32, id: "spacebar", key: 5},
     {caption: "command", code: null, id: "commandright", key: 6},
     {caption: "option", code: null, id: "optionright", key: 7}
   ]
