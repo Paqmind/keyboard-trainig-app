@@ -26,8 +26,8 @@ export default [
     {caption: "j", code: 74},
     {caption: "k", code: 75},
     {caption: "l", code: 76},
-    {caption: ":", code: 186},
-    {caption: "'", code: 222},
+    {caption: ":", code: 186, id: "colon"},
+    {caption: "'", code: 222, id: "coma"},
     {caption: "return", code: 13, id: "enter"}
   ],
   [
@@ -39,9 +39,9 @@ export default [
     {caption: "b", code: 66},
     {caption: "n", code: 78},
     {caption: "m", code: 77},
-    {caption: ",", code: 188},
-    {caption: ".", code: 190},
-    {caption: "/", code: 191},
+    {caption: ",", code: 188, id: "coma"},
+    {caption: ".", code: 190, id: "dot"},
+    {caption: "/", code: 191, id: "slash"},
     {caption: "shift", code: 61, id: "shiftright"},
   ]
 ]

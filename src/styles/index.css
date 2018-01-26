@@ -424,7 +424,7 @@ li {
   opacity: 0.5;
 }
 
-.tab, #square-bracket, #slash, #caps, #enter, #shiftleft, #shiftright {
+.tab, #square-bracket, #slash, #caps, #enter, #shiftleft, #shiftright, #colon, #coma, #dot {
   opacity: 0.5;
 }
 
