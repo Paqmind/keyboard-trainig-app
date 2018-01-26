@@ -19,7 +19,7 @@ class Main extends Component {
     this.state = {
       keyboard: initialKeyboardState,
       btnPressed: 0,
-      btnHighlighted: "",
+      btnHighlighted: null,
       inputValue: "",
       exampleLine: [],
       mode: "beginner",
@@ -114,7 +114,52 @@ class Main extends Component {
     }
   }
 
-  keyDownButtonHandler = (e) => {
+  keyDownHandler = (e) => {
+    let { inputValue, exampleLine, charCounter } = this.state
+    let nextButton = exampleLine.join(" ").split("")[charCounter + 1]
+    let selectedExampleLineChar = document.getElementsByClassName("example-line")
+
+    if (e.key == exampleLine.join(" ").split("")[charCounter]) {
+      this.setState({
+        inputValue: inputValue + e.key,
+        btnPressed: e.keyCode,
+        btnHighlighted: nextButton,
+        wrongButtonPressed: false,
+        charCounter: charCounter + 1
+      })
+
+      this.setCountingInterval()
+      this.statsCounter()
+      selectedExampleLineChar[charCounter].classList.add("typed-button")
+
+      if (this.state.inputValue == exampleLine.join(" ")) {
+        this.errorsCounter = 0
+        clearInterval(this.intId)
+        this.intId = 0
+        this.counter = 1
+        this.exampleLineSelectingCleaner()
+        this.setState({
+          charCounter: 0,                                  // обнуляем счетчик
+          inputValue: ""                                   // сбрасываем инпут
+        })
+        this.exampleLineInstaller()
+        this.firstCharButtonSelect()
+      }
+    } else {
+      if (e.keyCode !== 9
+        && e.keyCode !== 16
+        && e.keyCode !== 17
+        && e.keyCode !== 18
+        && e.keyCode !== 20
+        && e.keyCode !== 91) {
+        this.errorsCounter++
+        this.statsCounter()
+        this.setState({ wrongButtonPressed: true })
+      }
+    }
+  }
+
+  /*keyDownButtonHandler = (e) => {
     let { inputValue, exampleLine, mode, charCounter } = this.state
     let nextButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter + 1]),
       prevButton = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter]),
@@ -170,7 +215,7 @@ class Main extends Component {
         this.setState({ wrongButtonPressed: true })
       }
     }
-  }
+  }*/
 
   keyUpButtonHandler = () => {
     this.setState({btnPressed: 0}) //завершение имитации нажатия клавиши на экранной клавиатуре
@@ -184,11 +229,11 @@ class Main extends Component {
     }
   }
 
-  installKeyDownButtonHandler = () => {
+  installKeyDownHandler = () => {
     let input = document.getElementById("input")
-    input.addEventListener("keydown", this.keyDownButtonHandler)
+    input.addEventListener("keydown", this.keyDownHandler)
     return () => {
-      input.removeEventListener("keydown", this.keyDownButtonHandler)
+      input.removeEventListener("keydown", this.keyDownHandler)
     }
   }
 
@@ -228,7 +273,7 @@ class Main extends Component {
   componentDidMount() {
     this.firstCharButtonSelect()
     this.subscriptions.push(this.installModeSwitcherHandler())
-    this.subscriptions.push(this.installKeyDownButtonHandler())
+    this.subscriptions.push(this.installKeyDownHandler())
     this.subscriptions.push(this.installKeyUpButtonHandler())
   }
 
