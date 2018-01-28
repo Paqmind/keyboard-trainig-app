@@ -39,15 +39,6 @@ class Main extends Component {
     this.setState({btnHighlighted: firstChar})
   }
 
-  selectedButtonsCleaner = () => {
-    let buttons = document.getElementsByClassName("key")
-    for (let i = 0; i < buttons.length; i++) {
-      if (buttons[i].classList.contains("key-highlighted")) {
-        buttons[i].classList.remove("key-highlighted")
-      }
-    }
-  }
-
   setCountingInterval = () => {                             // запуск интервала для подсчета времени
     if (this.intId == 0) {                                  // набора одной строки
       this.intId = setInterval(() => this.counter++, 1000)
@@ -63,7 +54,7 @@ class Main extends Component {
   }
 
   modeSwitcher = (e) => {
-    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
+    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars, charCounter} = this.state
     const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
     this.setState({
       mode: e.target.value,   //изменение режима при переключении radioButtons
@@ -72,7 +63,6 @@ class Main extends Component {
 
     if (e.target.value == "beginner") {
       this.setState({ inputValue: "", charCounter: 0 })
-      this.selectedButtonsCleaner()
       this.firstCharButtonHightlighting() // выделение первой кнопки строки-примера из нового сотояния
       clearInterval(this.intId)
       this.errorsCounter = 0
@@ -80,7 +70,6 @@ class Main extends Component {
       this.intId = 0
     } else if (e.target.value == "advanced") {
       this.setState({ inputValue: "", charCounter: 0 })
-      this.selectedButtonsCleaner()
       this.firstCharButtonHightlighting()
       clearInterval(this.intId)
       this.errorsCounter = 0
