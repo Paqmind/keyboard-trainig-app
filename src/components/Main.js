@@ -53,14 +53,13 @@ class Main extends Component {
     return ((errorsCounter * 100) / exampleLine.join("").length).toFixed(2)
   }
 
-  modeSwitcher = (e) => {
-    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars, charCounter} = this.state
-    const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+  modeSwitcherHandler = (e) => {
+    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
     this.setState({
       mode: e.target.value,   //изменение режима при переключении radioButtons
       inputValue: "",
       charCounter: 0,
-      exampleLine
+      exampleLine: exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
     })
     this.firstCharButtonHightlighting()
 
@@ -78,7 +77,7 @@ class Main extends Component {
   }
 
   keyDownHandler = (e) => {
-    let { inputValue, exampleLine, charCounter, mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars } = this.state
+    let { inputValue, exampleLine, charCounter} = this.state
     let nextButton = exampleLine.join(" ").split("")[charCounter + 1]
 
     if (e.key == exampleLine.join(" ").split("")[charCounter]) {
@@ -128,9 +127,9 @@ class Main extends Component {
 
   installModeSwitcherHandler = () => {
     let mode = document.getElementById("mode")
-    mode.addEventListener("change", this.modeSwitcher)
+    mode.addEventListener("change", this.modeSwitcherHandler)
     return () => {
-      mode.removeEventListener("change", this.modeSwitcher)
+      mode.removeEventListener("change", this.modeSwitcherHandler)
     }
   }
 
@@ -183,7 +182,7 @@ class Main extends Component {
 
   render() {
     return <div className="App" onChange={this.inputOnChange}>
-      <OptionalBar handler={e => this.modeSwitcher(e)} state={this.state} />
+      <OptionalBar handler={e => this.modeSwitcherHandler(e)} state={this.state} />
       <div className="divider"></div>
       <Input state={this.state} />
       <ExampleLine state={this.state} />
