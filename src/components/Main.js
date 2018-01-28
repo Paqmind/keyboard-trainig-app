@@ -3,7 +3,7 @@ import OptionalBar from "./OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./ExampleLine"
 import exampleLineGenerator from './exampleLineGenerator'
-import Keyboard from "./Keyboard"
+import Keyboard from "./keyboard/Keyboard"
 import initialKeyboardState from '../initialKeyboardState'
 import Footer from './Footer'
 import "../styles/index.css"
@@ -32,28 +32,6 @@ class Main extends Component {
       charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
     }
   }
-
-  /*beginnerModeLineGenerator = (wordsStore) => { // метод генерирует строку из разных случайных слов
-    let beginnerExampleLine = [],
-      randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
-    for (let i = 0; i < this.state.exampleLineMaxWords; i++) {
-      if (beginnerExampleLine.join(" ").length <= this.state.exampleLineMaxChars) {
-        beginnerExampleLine.push(randomWord)
-      }
-    }
-    return beginnerExampleLine
-  }
-
-  advancedModeLineGenerator = (wordsStore) => { // метод генерирует строку из случайного повторяющегося слова
-    let advancedExampleLine = []
-    for (let i = 0; i < this.state.exampleLineMaxWords; i++) {
-      let randomWord = wordsStore[Math.floor(Math.random() * wordsStore.length)]
-      if (advancedExampleLine.join(" ").length <= this.state.exampleLineMaxChars) {
-        advancedExampleLine.push(randomWord)
-      }
-    }
-    return advancedExampleLine
-  }*/
 
   firstCharButtonSelect = () => {
     let { exampleLine, charCounter } = this.state
@@ -259,19 +237,6 @@ class Main extends Component {
       errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
     })
   }
-
-  /*exampleLineInstaller = () => {
-    let { wordsStore, mode } = this.state
-    let exampleLine = []
-    if (mode == 'beginner') {
-      exampleLine = this.beginnerModeLineGenerator(wordsStore)
-    } else if (mode == 'advanced') {
-      exampleLine = this.advancedModeLineGenerator(wordsStore)
-    } else {
-      exampleLine = []
-    }
-    this.setState({ exampleLine })
-  }*/
 
   componentWillMount() {
     const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
