@@ -35,8 +35,8 @@ class Main extends Component {
 
   firstCharButtonSelect = () => {
     let { exampleLine, charCounter } = this.state
-    let firstChar = document.getElementsByClassName(exampleLine.join(" ").split("")[charCounter])
-    firstChar[0].classList.add("key-highlighted")
+    let firstChar = exampleLine.join(" ")[charCounter]
+    this.setState({btnHighlighted: firstChar})
   }
 
   selectedButtonsCleaner = () => {
