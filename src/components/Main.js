@@ -4,7 +4,7 @@ import Input from "./Input"
 import ExampleLine from "./exampleLine/ExampleLine"
 import exampleLineGenerator from './exampleLine/exampleLineGenerator'
 import Keyboard from "./keyboard/Keyboard"
-import initialKeyboardState from '../initialKeyboardState'
+import initialKeyboardState from './keyboard/initialKeyboardState'
 import Footer from './Footer'
 import "../styles/index.css"
 
