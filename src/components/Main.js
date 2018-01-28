@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import OptionalBar from "./OptionalBar"
 import Input from "./Input"
-import ExampleLine from "./ExampleLine"
-import exampleLineGenerator from './exampleLineGenerator'
+import ExampleLine from "./exampleLine/ExampleLine"
+import exampleLineGenerator from './exampleLine/exampleLineGenerator'
 import Keyboard from "./keyboard/Keyboard"
 import initialKeyboardState from '../initialKeyboardState'
 import Footer from './Footer'
