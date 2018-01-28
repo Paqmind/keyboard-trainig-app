@@ -60,17 +60,18 @@ class Main extends Component {
       mode: e.target.value,   //изменение режима при переключении radioButtons
       exampleLine
     })
+    this.firstCharButtonHightlighting()
 
     if (e.target.value == "beginner") {
       this.setState({ inputValue: "", charCounter: 0 })
-      this.firstCharButtonHightlighting() // выделение первой кнопки строки-примера из нового сотояния
+      //this.firstCharButtonHightlighting() // выделение первой кнопки строки-примера из нового сотояния
       clearInterval(this.intId)
       this.errorsCounter = 0
       this.counter = 1
       this.intId = 0
     } else if (e.target.value == "advanced") {
       this.setState({ inputValue: "", charCounter: 0 })
-      this.firstCharButtonHightlighting()
+      //this.firstCharButtonHightlighting()
       clearInterval(this.intId)
       this.errorsCounter = 0
       this.counter = 1
@@ -116,6 +117,9 @@ class Main extends Component {
         this.errorsCounter++
         this.statsCounter()
         this.setState({ wrongButtonPressed: true })
+        setTimeout(() => {
+          this.setState({wrongButtonPressed: false})
+        }, 300)
       }
     }
   }
