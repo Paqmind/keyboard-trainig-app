@@ -1,13 +1,10 @@
 import React from "react"
-let classNames = require('classnames')
+import classNamesGenerator from './classNames'
 
 const ExampleLine = (props) => {
-  let { exampleLine, inputValue } = props.state
+  const { exampleLine, inputValue } = props.state
   return <div className="example-line-wrapper">{exampleLine.join(" ").split("").map((item, i) =>
-    <span className={classNames({
-      "example-line": true,
-      "typed-button": inputValue[i] == item
-    })} key={i}>{item}</span>
+    <span className={classNamesGenerator(inputValue, item, i)} key={i}>{item}</span>
   )}</div>
 }
 
