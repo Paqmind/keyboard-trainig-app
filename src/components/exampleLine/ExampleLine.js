@@ -1,8 +1,13 @@
 import React from "react"
+let classNames = require('classnames')
 
 const ExampleLine = (props) => {
-  return <div className="example-line-wrapper">{props.state.exampleLine.join(" ").split("").map((item, i) =>
-    <span className="example-line" key={i}>{item}</span>
+  let { exampleLine, inputValue } = props.state
+  return <div className="example-line-wrapper">{exampleLine.join(" ").split("").map((item, i) =>
+    <span className={classNames({
+      "example-line": true,
+      "typed-button": inputValue[i] == item
+    })} key={i}>{item}</span>
   )}</div>
 }
 
