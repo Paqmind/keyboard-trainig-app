@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import OptionalBar from "./OptionalBar"
+import OptionalBar from "./optionalBar/OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./exampleLine/ExampleLine"
 import exampleLineGenerator from './exampleLine/exampleLineGenerator'
@@ -11,9 +11,9 @@ import "../styles/index.css"
 class Main extends Component {
   constructor(props) {
     super(props)
-    this.intId = 0                   // интервал для подсчета времени набора одной строки
+    /*this.intId = 0                   // интервал для подсчета времени набора одной строки
     this.counter = 1                 // счетчик времени для расчета символов в секунду
-    this.errorsCounter = 0           // счетчик ошибок набора в одной строке
+    this.errorsCounter = 0           // счетчик ошибок набора в одной строке*/
     this.subscriptions = []          // массив функций removeEventListeners
     let { words } = this.props.words // массив слов из words.json файла
     this.state = {
@@ -39,7 +39,7 @@ class Main extends Component {
     this.setState({btnHighlighted: firstChar})
   }
 
-  setCountingInterval = () => {                             // запуск интервала для подсчета времени
+  /*setCountingInterval = () => {                             // запуск интервала для подсчета времени
     if (this.intId == 0) {                                  // набора одной строки
       this.intId = setInterval(() => this.counter++, 1000)
     }
@@ -51,7 +51,7 @@ class Main extends Component {
 
   errorsPerLineCounter = (exampleLine, errorsCounter) => {   // подсчет ошибок в строке
     return ((errorsCounter * 100) / exampleLine.join("").length).toFixed(2)
-  }
+  }*/
 
   modeSwitcherHandler = (e) => {
     this.setState({
@@ -62,7 +62,7 @@ class Main extends Component {
     })
     this.firstCharButtonHightlighting()
 
-    if (e.target.value == "beginner") {
+    /*if (e.target.value == "beginner") {
       clearInterval(this.intId)
       this.errorsCounter = 0
       this.counter = 1
@@ -72,7 +72,7 @@ class Main extends Component {
       this.errorsCounter = 0
       this.counter = 1
       this.intId = 0
-    }
+    }*/
   }
 
   keyDownHandler = (e) => {
@@ -88,14 +88,14 @@ class Main extends Component {
         charCounter: charCounter + 1
       })
 
-      this.setCountingInterval()
-      this.statsCounter()
+      //this.setCountingInterval()
+      //this.statsCounter()
 
       if (this.state.inputValue == exampleLine.join(" ")) {
-        this.errorsCounter = 0
+        /*this.errorsCounter = 0
         clearInterval(this.intId)
         this.intId = 0
-        this.counter = 1
+        this.counter = 1*/
         this.setState({
           charCounter: 0,                                  // обнуляем счетчик
           inputValue: "",                                  // сбрасываем инпут
@@ -110,8 +110,8 @@ class Main extends Component {
         && e.keyCode !== 18
         && e.keyCode !== 20
         && e.keyCode !== 91) {
-        this.errorsCounter++
-        this.statsCounter()
+        /*this.errorsCounter++
+        this.statsCounter()*/
         this.setState({ wrongButtonPressed: true })
         setTimeout(() => {
           this.setState({wrongButtonPressed: false})
@@ -154,13 +154,13 @@ class Main extends Component {
     return exampleLine
   }
 
-  statsCounter = () => {
+  /*statsCounter = () => {
     let  {inputValue, exampleLine } = this.state
     this.setState({
       charPerMinute: this.charPerMinuteCounter(inputValue, this.counter),
       errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
     })
-  }
+  }*/
 
   componentWillMount() {
     this.setState({exampleLine: this.setExampleLine()})

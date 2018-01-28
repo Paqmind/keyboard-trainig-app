@@ -1,6 +1,6 @@
 import React from "react"
-import Speedometer from "../icons/speedometer.png"
-import Errors from '../icons/errors.svg'
+import Speedometer from "../../icons/speedometer.png"
+import Errors from '../../icons/errors.svg'
 
 const OptionalBar = (props) => {
   return <div className="optional-bar" id="mode">
