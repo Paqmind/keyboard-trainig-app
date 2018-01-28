@@ -1,5 +1,5 @@
 import React from 'react'
-import classNamesGenerator from './keysClassnamesGenerator'
+import classNamesGenerator from './classNames'
 
 const Keyboard = props => {
   return <div id="keyboard">
