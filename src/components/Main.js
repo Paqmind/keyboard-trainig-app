@@ -33,7 +33,7 @@ class Main extends Component {
     }
   }
 
-  firstCharButtonSelect = () => {
+  firstCharButtonHightlighting = () => {
     let { exampleLine, charCounter } = this.state
     let firstChar = exampleLine.join(" ")[charCounter]
     this.setState({btnHighlighted: firstChar})
@@ -73,7 +73,7 @@ class Main extends Component {
     if (e.target.value == "beginner") {
       this.setState({ inputValue: "", charCounter: 0 })
       this.selectedButtonsCleaner()
-      this.firstCharButtonSelect() // выделение первой кнопки строки-примера из нового сотояния
+      this.firstCharButtonHightlighting() // выделение первой кнопки строки-примера из нового сотояния
       clearInterval(this.intId)
       this.errorsCounter = 0
       this.counter = 1
@@ -81,7 +81,7 @@ class Main extends Component {
     } else if (e.target.value == "advanced") {
       this.setState({ inputValue: "", charCounter: 0 })
       this.selectedButtonsCleaner()
-      this.firstCharButtonSelect()
+      this.firstCharButtonHightlighting()
       clearInterval(this.intId)
       this.errorsCounter = 0
       this.counter = 1
@@ -114,9 +114,8 @@ class Main extends Component {
           charCounter: 0,                                  // обнуляем счетчик
           inputValue: ""                                   // сбрасываем инпут
         })
-        let exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
-        this.setState({ exampleLine })
-        this.firstCharButtonSelect()
+        this.setExampleLine()
+        this.firstCharButtonHightlighting()
       }
     } else {
       if (e.keyCode !== 9
@@ -160,6 +159,12 @@ class Main extends Component {
     }
   }
 
+  setExampleLine = () => {
+    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
+    const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+    this.setState({ exampleLine })
+  }
+
   statsCounter = () => {
     let  {inputValue, exampleLine } = this.state
     this.setState({
@@ -169,13 +174,11 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
-    const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
-    this.setState({ exampleLine })
+    this.setExampleLine()
   }
 
   componentDidMount() {
-    this.firstCharButtonSelect()
+    this.firstCharButtonHightlighting()
     this.subscriptions.push(this.installModeSwitcherHandler())
     this.subscriptions.push(this.installKeyDownHandler())
     this.subscriptions.push(this.installKeyUpHandler())
