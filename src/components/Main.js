@@ -54,12 +54,11 @@ class Main extends Component {
   }
 
   modeSwitcherHandler = (e) => {
-    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
     this.setState({
       mode: e.target.value,   //изменение режима при переключении radioButtons
       inputValue: "",
       charCounter: 0,
-      exampleLine: exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+      exampleLine: this.setExampleLine()
     })
     this.firstCharButtonHightlighting()
 
@@ -99,9 +98,9 @@ class Main extends Component {
         this.counter = 1
         this.setState({
           charCounter: 0,                                  // обнуляем счетчик
-          inputValue: ""                                   // сбрасываем инпут
+          inputValue: "",                                  // сбрасываем инпут
+          exampleLine: this.setExampleLine()
         })
-        this.setExampleLine()
         this.firstCharButtonHightlighting()
       }
     } else {
@@ -152,7 +151,7 @@ class Main extends Component {
   setExampleLine = () => {
     const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
     const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
-    this.setState({ exampleLine })
+    return exampleLine
   }
 
   statsCounter = () => {
@@ -164,7 +163,7 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    this.setExampleLine()
+    this.setState({exampleLine: this.setExampleLine()})
   }
 
   componentDidMount() {
