@@ -39,12 +39,6 @@ class Main extends Component {
     this.setState({ btnHighlighted: firstChar })
   }
 
-  setCountingInterval = () => {
-    if (this.timerId == 0) {
-      this.timerId = setInterval(() => this.setState({ timeCounter: this.state.timeCounter + 1 }), 1000)
-    }
-  }
-
   charPerMinuteCounter = (inputValue, timeCounter) => {          // подсчет символов в минуту
     return Math.round((60 / timeCounter) * inputValue.length)
   }
@@ -104,21 +98,20 @@ class Main extends Component {
         && e.keyCode !== 18
         && e.keyCode !== 20
         && e.keyCode !== 91) {
-        //this.errorsCounter++
         this.statsCounter()
         this.setState({
           wrongButtonPressed: true,
           errors: errors + 1
         })
         setTimeout(() => {
-          this.setState({wrongButtonPressed: false})
+          this.setState({ wrongButtonPressed: false })
         }, 300)
       }
     }
   }
 
   keyUpHandler = () => {
-    this.setState({btnPressed: null}) //завершение имитации нажатия клавиши на экранной клавиатуре
+    this.setState({ btnPressed: null }) //завершение имитации нажатия клавиши на экранной клавиатуре
   }
 
   installModeSwitcherHandler = () => {
@@ -151,6 +144,12 @@ class Main extends Component {
     return exampleLine
   }
 
+  setCountingInterval = () => {
+    if (this.timerId == 0) {
+      this.timerId = setInterval(() => this.setState({ timeCounter: this.state.timeCounter + 1 }), 1000)
+    }
+  }
+
   statsCounter = () => {
     let  {inputValue, exampleLine, errors, timeCounter } = this.state
     this.setState({
@@ -160,7 +159,7 @@ class Main extends Component {
   }
 
   componentWillMount() {
-    this.setState({exampleLine: this.setExampleLine()})
+    this.setState({ exampleLine: this.setExampleLine() })
   }
 
   componentDidMount() {
