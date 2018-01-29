@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import OptionalBar from "./optionalBar/OptionalBar"
+import OptionalBar from "./OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./exampleLine/ExampleLine"
 import exampleLineGenerator from './exampleLine/exampleLineGenerator'
@@ -11,72 +11,64 @@ import "../styles/index.css"
 class Main extends Component {
   constructor(props) {
     super(props)
-    /*this.intId = 0                   // интервал для подсчета времени набора одной строки
-    this.counter = 1                 // счетчик времени для расчета символов в секунду
-    this.errorsCounter = 0           // счетчик ошибок набора в одной строке*/
-    this.subscriptions = []          // массив функций removeEventListeners
-    let { words } = this.props.words // массив слов из words.json файла
+    this.timerId = 0                   // интервал для подсчета времени набора одной строки
+    this.subscriptions = []            // массив функций removeEventListeners
+    const { words } = this.props.words // массив слов из words.json файла
     this.state = {
       keyboard: initialKeyboardState,
-      btnPressed: null,
+      wrongButtonPressed: false,
       btnHighlighted: null,
+      btnPressed: null,
+      wordsStore: words,
       inputValue: "",
       exampleLine: [],
-      exampleLineMaxWords: 15,       // максимальное колличество слов в exampleLine
-      exampleLineMaxChars: 60,       // максимальное колличество символов в exampleLine
+      exampleLineMaxWords: 15,         // максимальное колличество слов в exampleLine
+      exampleLineMaxChars: 60,         // максимальное колличество символов в exampleLine
       mode: "beginner",
-      wordsStore: words,
-      wrongButtonPressed: false,
-      charPerMinute: 0,              // количество символов в минуту
-      errors: 0,                     // количество ошибок допущенных в одной строке
-      charCounter: 0                 // счетчик для побуквенного сравнения инпута и строки-примера
+      charCounter: 0,                  // счетчик для побуквенного сравнения инпута и строки-примера
+      timeCounter: 1,                  // счетчик времени для расчета символов в секунду
+      charsPerMinute: 0,
+      errorsPerLine: 0,
+      errors: 0,                       // количество ошибок допущенных в одной строке
     }
   }
 
   firstCharButtonHightlighting = () => {
     let { exampleLine, charCounter } = this.state
     let firstChar = exampleLine.join(" ")[charCounter]
-    this.setState({btnHighlighted: firstChar})
+    this.setState({ btnHighlighted: firstChar })
   }
 
-  /*setCountingInterval = () => {                             // запуск интервала для подсчета времени
-    if (this.intId == 0) {                                  // набора одной строки
-      this.intId = setInterval(() => this.counter++, 1000)
+  setCountingInterval = () => {
+    if (this.timerId == 0) {
+      this.timerId = setInterval(() => this.setState({ timeCounter: this.state.timeCounter + 1 }), 1000)
     }
   }
 
-  charPerMinuteCounter = (inputValue, counter) => {          // подсчет символов в минуту
-    return Math.round((60 / counter) * inputValue.length)
+  charPerMinuteCounter = (inputValue, timeCounter) => {          // подсчет символов в минуту
+    return Math.round((60 / timeCounter) * inputValue.length)
   }
 
-  errorsPerLineCounter = (exampleLine, errorsCounter) => {   // подсчет ошибок в строке
-    return ((errorsCounter * 100) / exampleLine.join("").length).toFixed(2)
-  }*/
+  errorsPerLineCounter = (exampleLine, errors) => {   // подсчет ошибок в строке
+    return ((errors * 100) / exampleLine.join("").length).toFixed(2)
+  }
 
   modeSwitcherHandler = (e) => {
     this.setState({
       mode: e.target.value,   //изменение режима при переключении radioButtons
       inputValue: "",
       charCounter: 0,
-      exampleLine: this.setExampleLine()
+      exampleLine: this.setExampleLine(),
+      timeCounter: 1,
+      errors: 0,
     })
     this.firstCharButtonHightlighting()
-
-    /*if (e.target.value == "beginner") {
-      clearInterval(this.intId)
-      this.errorsCounter = 0
-      this.counter = 1
-      this.intId = 0
-    } else if (e.target.value == "advanced") {
-      clearInterval(this.intId)
-      this.errorsCounter = 0
-      this.counter = 1
-      this.intId = 0
-    }*/
+    clearInterval(this.timerId)
+    this.timerId = 0
   }
 
   keyDownHandler = (e) => {
-    let { inputValue, exampleLine, charCounter} = this.state
+    let { inputValue, exampleLine, charCounter, errors } = this.state
     let nextButton = exampleLine.join(" ").split("")[charCounter + 1]
 
     if (e.key == exampleLine.join(" ").split("")[charCounter]) {
@@ -85,21 +77,23 @@ class Main extends Component {
         btnPressed: e.keyCode,
         btnHighlighted: nextButton,
         wrongButtonPressed: false,
-        charCounter: charCounter + 1
+        charCounter: charCounter + 1,
+        userStartedTyping: true
       })
 
-      //this.setCountingInterval()
-      //this.statsCounter()
+      this.setCountingInterval()
+      this.statsCounter()
 
       if (this.state.inputValue == exampleLine.join(" ")) {
-        /*this.errorsCounter = 0
-        clearInterval(this.intId)
-        this.intId = 0
-        this.counter = 1*/
+        clearInterval(this.timerId)
+        this.timerId = 0
         this.setState({
           charCounter: 0,                                  // обнуляем счетчик
           inputValue: "",                                  // сбрасываем инпут
-          exampleLine: this.setExampleLine()
+          exampleLine: this.setExampleLine(),
+          userStartedTyping: false,
+          timeCounter: 1,
+          errors: 0
         })
         this.firstCharButtonHightlighting()
       }
@@ -110,9 +104,12 @@ class Main extends Component {
         && e.keyCode !== 18
         && e.keyCode !== 20
         && e.keyCode !== 91) {
-        /*this.errorsCounter++
-        this.statsCounter()*/
-        this.setState({ wrongButtonPressed: true })
+        //this.errorsCounter++
+        this.statsCounter()
+        this.setState({
+          wrongButtonPressed: true,
+          errors: errors + 1
+        })
         setTimeout(() => {
           this.setState({wrongButtonPressed: false})
         }, 300)
@@ -154,13 +151,13 @@ class Main extends Component {
     return exampleLine
   }
 
-  /*statsCounter = () => {
-    let  {inputValue, exampleLine } = this.state
+  statsCounter = () => {
+    let  {inputValue, exampleLine, errors, timeCounter } = this.state
     this.setState({
-      charPerMinute: this.charPerMinuteCounter(inputValue, this.counter),
-      errors: this.errorsPerLineCounter(exampleLine, this.errorsCounter)
+      charsPerMinute: this.charPerMinuteCounter(inputValue, timeCounter),
+      errorsPerLine: this.errorsPerLineCounter(exampleLine, errors)
     })
-  }*/
+  }
 
   componentWillMount() {
     this.setState({exampleLine: this.setExampleLine()})
