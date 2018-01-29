@@ -77,20 +77,8 @@ class Main extends Component {
 
       this.setCountingInterval()
       this.statsCounter()
+      this.exampleLineVsInputCompare(this.state.inputValue, exampleLine)
 
-      if (this.state.inputValue == exampleLine.join(" ")) {
-        clearInterval(this.timerId)
-        this.timerId = 0
-        this.setState({
-          charCounter: 0,                                  // обнуляем счетчик
-          inputValue: "",                                  // сбрасываем инпут
-          exampleLine: this.setExampleLine(),
-          userStartedTyping: false,
-          timeCounter: 1,
-          errors: 0
-        })
-        this.firstCharButtonHightlighting()
-      }
     } else {
       if (e.keyCode !== 9
         && e.keyCode !== 16
@@ -112,6 +100,22 @@ class Main extends Component {
 
   keyUpHandler = () => {
     this.setState({ btnPressed: null }) //завершение имитации нажатия клавиши на экранной клавиатуре
+  }
+
+  exampleLineVsInputCompare = (inputValue, exampleLine) => {
+    if (inputValue == exampleLine.join(" ")) {
+      clearInterval(this.timerId)
+      this.timerId = 0
+      this.setState({
+        charCounter: 0,                                  // обнуляем счетчик
+        inputValue: "",                                  // сбрасываем инпут
+        exampleLine: this.setExampleLine(),
+        userStartedTyping: false,
+        timeCounter: 1,
+        errors: 0
+      })
+      this.firstCharButtonHightlighting()
+    }
   }
 
   installModeSwitcherHandler = () => {
