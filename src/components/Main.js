@@ -10,23 +10,23 @@ import "../styles/index.css"
 class Main extends Component {
   constructor(props) {
     super(props)
-    this.timerId = 0                   // интервал для подсчета времени набора одной строки
-    this.subscriptions = []            // массив функций removeEventListeners
-    const { words } = this.props.words // массив слов из words.json файла
+    this.timerId = 0                   // interval for counting the time of dialing one line
+    this.subscriptions = []            // array of functions removeEventListeners
+    const { words } = this.props.words // array of words from words.json file
     this.state = {
-      wrongButtonPressed: false,
-      btnHighlighted: null,
-      btnPressed: null,
-      store: words,
-      inputValue: "",
-      exampleLine: [],
-      exampleLineMaxWords: 15,         // максимальное колличество слов в exampleLine
-      exampleLineMaxChars: 60,         // максимальное колличество символов в exampleLine
-      mode: "beginner",
-      charCounter: 0,                  // счетчик для побуквенного сравнения инпута и строки-примера
-      timeCounter: 1,                  // счетчик времени для расчета символов в секунду
-      charsPerMinute: 0,
-      errorsPerLine: 0,
+      wrongButtonPressed: false,       // indicator of pressed button (rigth/wrong)
+      btnHighlighted: null,            // name of highlighted key (q, w, e, r, etc.)
+      btnPressed: null,                // code of pressed key
+      store: words,                    // store of words for exampleLine
+      inputValue: "",                  // user dialing value
+      exampleLine: [],                 // array of words rendered now
+      exampleLineMaxWords: 15,         // maximum number of words in exampleLine
+      exampleLineMaxChars: 60,         // maximum number of chars in exampleLine
+      mode: "beginner",                // selected difficulty level (beginner/advanced)
+      charCounter: 0,                  // counter for letter-by-letter comparison of intput and example line
+      timeCounter: 1,                  // time counter for calculating symbols per second
+      charsPerMinute: 0,               // current symbols per second value
+      errorsPerLine: 0,                // errors admitted in current example line
       errors: 0,                       // количество ошибок допущенных в одной строке
     }
   }
