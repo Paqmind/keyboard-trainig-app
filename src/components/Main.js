@@ -17,7 +17,7 @@ class Main extends Component {
       wrongButtonPressed: false,
       btnHighlighted: null,
       btnPressed: null,
-      wordsStore: words,
+      store: words,
       inputValue: "",
       exampleLine: [],
       exampleLineMaxWords: 15,         // максимальное колличество слов в exampleLine
@@ -141,8 +141,8 @@ class Main extends Component {
   }
 
   setExampleLine = () => {
-    const {mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars} = this.state
-    const exampleLine = exampleLineGenerator(mode, wordsStore, exampleLineMaxWords, exampleLineMaxChars)
+    const {mode, store, exampleLineMaxWords, exampleLineMaxChars} = this.state
+    const exampleLine = exampleLineGenerator(mode, store, exampleLineMaxWords, exampleLineMaxChars)
     return exampleLine
   }
 
