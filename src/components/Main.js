@@ -55,9 +55,10 @@ class Main extends Component {
 
   keyDownHandler = (e) => {
     let { inputValue, exampleLine, charCounter, errors } = this.state
-    let nextButton = exampleLine.join(" ").split("")[charCounter + 1]
+    let nextButton = exampleLine.join(" ").split("")[charCounter + 1],
+        currButton = exampleLine.join(" ").split("")[charCounter]
 
-    if (e.key == exampleLine.join(" ").split("")[charCounter]) {
+    if (e.key == currButton) {
       this.setState({
         inputValue: inputValue + e.key,
         btnPressed: e.keyCode,
@@ -72,21 +73,14 @@ class Main extends Component {
       this.exampleLineVsInputCompare(this.state.inputValue, exampleLine)
 
     } else {
-      if (e.keyCode !== 9
-        && e.keyCode !== 16
-        && e.keyCode !== 17
-        && e.keyCode !== 18
-        && e.keyCode !== 20
-        && e.keyCode !== 91) {
-        this.statsCounter()
-        this.setState({
-          wrongButtonPressed: true,
-          errors: errors + 1
-        })
-        setTimeout(() => {
-          this.setState({ wrongButtonPressed: false })
-        }, 300)
-      }
+      this.statsCounter()
+      this.setState({
+        wrongButtonPressed: true,
+        errors: errors + 1
+      })
+      setTimeout(() => {
+        this.setState({ wrongButtonPressed: false })
+      }, 300)
     }
   }
 
