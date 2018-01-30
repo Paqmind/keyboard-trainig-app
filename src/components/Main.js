@@ -3,6 +3,8 @@ import OptionalBar from "./OptionalBar"
 import Input from "./Input"
 import ExampleLine from "./exampleLine/ExampleLine"
 import exampleLineGenerator from './exampleLine/exampleLineGenerator'
+import countCharPerMinute from '../helpers/dialingSpeedCounter'
+import countErrorsPerLine from '../helpers/errorsCounter'
 import Keyboard from "./keyboard/Keyboard"
 import Footer from './Footer'
 import "../styles/index.css"
@@ -35,14 +37,6 @@ class Main extends Component {
     let { exampleLine, charCounter } = this.state
     let firstChar = exampleLine.join(" ")[charCounter]
     this.setState({ btnHighlighted: firstChar })
-  }
-
-  charPerMinuteCounter = (inputValue, timeCounter) => {          // подсчет символов в минуту
-    return Math.round((60 / timeCounter) * inputValue.length)
-  }
-
-  errorsPerLineCounter = (exampleLine, errors) => {   // подсчет ошибок в строке
-    return ((errors * 100) / exampleLine.join("").length).toFixed(2)
   }
 
   modeSwitcherHandler = (e) => {
@@ -155,8 +149,8 @@ class Main extends Component {
   statsCounter = () => {
     let  {inputValue, exampleLine, errors, timeCounter } = this.state
     this.setState({
-      charsPerMinute: this.charPerMinuteCounter(inputValue, timeCounter),
-      errorsPerLine: this.errorsPerLineCounter(exampleLine, errors)
+      charsPerMinute: countCharPerMinute(inputValue, timeCounter),
+      errorsPerLine: countErrorsPerLine(exampleLine, errors)
     })
   }
 
