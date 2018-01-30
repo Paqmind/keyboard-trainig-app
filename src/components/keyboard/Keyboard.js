@@ -1,4 +1,5 @@
 import React from 'react'
+import keys from './keys'
 import classNamesGenerator from './classNames'
 
 const Keyboard = props => {
@@ -21,7 +22,7 @@ const Keyboard = props => {
     </ul>
     <ul className="cf" id="qwerty">
       {
-        props.state.keyboard[0].map((obj) => {
+        keys[0].map((obj) => {
           return <li key={obj.code}>
             <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>
@@ -32,7 +33,7 @@ const Keyboard = props => {
     </ul>
     <ul className="cf" id="asdfg">
       {
-        props.state.keyboard[1].map((obj) => {
+        keys[1].map((obj) => {
           return <li key={obj.code}>
             <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>
@@ -43,7 +44,7 @@ const Keyboard = props => {
     </ul>
     <ul className="cf" id="zxcvb">
       {
-        props.state.keyboard[2].map((obj) => {
+        keys[2].map((obj) => {
           return <li key={obj.code}>
             <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>
@@ -54,7 +55,7 @@ const Keyboard = props => {
     </ul>
     <ul className="cf" id="bottomrow">
       {
-        props.state.keyboard[3].map((obj) => {
+        keys[3].map((obj) => {
           return <li key={obj.key}>
             <a href="#" className={classNamesGenerator(props.state, obj)} id={obj.id || null}>
               <span>{obj.caption}</span>

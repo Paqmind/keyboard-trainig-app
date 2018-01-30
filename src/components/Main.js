@@ -4,7 +4,6 @@ import Input from "./Input"
 import ExampleLine from "./exampleLine/ExampleLine"
 import exampleLineGenerator from './exampleLine/exampleLineGenerator'
 import Keyboard from "./keyboard/Keyboard"
-import initialKeyboardState from './keyboard/initialKeyboardState'
 import Footer from './Footer'
 import "../styles/index.css"
 
@@ -15,7 +14,6 @@ class Main extends Component {
     this.subscriptions = []            // массив функций removeEventListeners
     const { words } = this.props.words // массив слов из words.json файла
     this.state = {
-      keyboard: initialKeyboardState,
       wrongButtonPressed: false,
       btnHighlighted: null,
       btnPressed: null,
