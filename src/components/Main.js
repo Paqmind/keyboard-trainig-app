@@ -33,22 +33,16 @@ class Main extends Component {
     }
   }
 
-  firstCharButtonHightlighting = () => {
-    let { exampleLine, charCounter } = this.state
-    let firstChar = exampleLine.join(" ")[charCounter]
-    this.setState({ btnHighlighted: firstChar })
-  }
-
   modeSwitcherHandler = (e) => {
     this.setState({
-      mode: e.target.value,   //изменение режима при переключении radioButtons
+      mode: e.target.value,
       inputValue: "",
       charCounter: 0,
       exampleLine: this.setExampleLine(),
       timeCounter: 1,
       errors: 0,
     })
-    this.firstCharButtonHightlighting()
+    this.hightLightFirstButton()
     clearInterval(this.timerId)
     this.timerId = 0
   }
@@ -64,8 +58,7 @@ class Main extends Component {
         btnPressed: e.keyCode,
         btnHighlighted: nextButton,
         wrongButtonPressed: false,
-        charCounter: charCounter + 1,
-        userStartedTyping: true
+        charCounter: charCounter + 1
       })
 
       this.setCountingInterval()
@@ -85,7 +78,13 @@ class Main extends Component {
   }
 
   keyUpHandler = () => {
-    this.setState({ btnPressed: null }) //завершение имитации нажатия клавиши на экранной клавиатуре
+    this.setState({ btnPressed: null })
+  }
+
+  hightLightFirstButton = () => {
+    let { exampleLine, charCounter } = this.state
+    let firstChar = exampleLine.join(" ")[charCounter]
+    this.setState({ btnHighlighted: firstChar })
   }
 
   exampleLineVsInputCompare = (inputValue, exampleLine) => {
@@ -93,15 +92,22 @@ class Main extends Component {
       clearInterval(this.timerId)
       this.timerId = 0
       this.setState({
-        charCounter: 0,                                  // обнуляем счетчик
-        inputValue: "",                                  // сбрасываем инпут
+        charCounter: 0,
+        inputValue: "",
         exampleLine: this.setExampleLine(),
-        userStartedTyping: false,
         timeCounter: 1,
         errors: 0
       })
-      this.firstCharButtonHightlighting()
+      this.hightLightFirstButton()
     }
+  }
+
+  statsCounter = () => {
+    let  {inputValue, exampleLine, errors, timeCounter } = this.state
+    this.setState({
+      charsPerMinute: countCharPerMinute(inputValue, timeCounter),
+      errorsPerLine: countErrorsPerLine(exampleLine, errors)
+    })
   }
 
   installModeSwitcherHandler = () => {
@@ -140,20 +146,12 @@ class Main extends Component {
     }
   }
 
-  statsCounter = () => {
-    let  {inputValue, exampleLine, errors, timeCounter } = this.state
-    this.setState({
-      charsPerMinute: countCharPerMinute(inputValue, timeCounter),
-      errorsPerLine: countErrorsPerLine(exampleLine, errors)
-    })
-  }
-
   componentWillMount() {
     this.setState({ exampleLine: this.setExampleLine() })
   }
 
   componentDidMount() {
-    this.firstCharButtonHightlighting()
+    this.hightLightFirstButton()
     this.subscriptions.push(this.installModeSwitcherHandler())
     this.subscriptions.push(this.installKeyDownHandler())
     this.subscriptions.push(this.installKeyUpHandler())
@@ -166,7 +164,7 @@ class Main extends Component {
   }
 
   render() {
-    return <div className="App" onChange={this.inputOnChange}>
+    return <div className="App">
       <OptionalBar handler={e => this.modeSwitcherHandler(e)} state={this.state} />
       <div className="divider"></div>
       <Input state={this.state} />
