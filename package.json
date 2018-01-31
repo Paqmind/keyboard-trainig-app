@@ -2,7 +2,7 @@
   "name": "keyboard-training-app",
   "homepage": "https://datexgo.github.io/keyboard-trainig-app",
   "version": "1.0.0",
-  "description": "simple app for trainig fast typing skills",
+  "description": "A simple app to train fast typing",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --content-base ./public --open",
