@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import OptionalBar from "./OptionalBar"
-import Input from "./Input"
+import Input from "./input/Input"
 import ExampleLine from "./exampleLine/ExampleLine"
 import exampleLineGenerator from './exampleLine/exampleLineGenerator'
 import countCharPerMinute from '../helpers/dialingSpeedCounter'
@@ -21,6 +21,7 @@ class Main extends Component {
       btnPressed: null,                // code of pressed key
       store: words,                    // store of words for exampleLine
       inputValue: "",                  // user dialing value
+      correctInputLine: false,         // indicator of correctly typed input line (true/false)
       exampleLine: [],                 // array of words rendered now
       exampleLineMaxWords: 15,         // maximum number of words in exampleLine
       exampleLineMaxChars: 60,         // maximum number of chars in exampleLine
@@ -94,10 +95,14 @@ class Main extends Component {
       this.setState({
         charCounter: 0,
         inputValue: "",
+        correctInputLine: true,
         exampleLine: this.setExampleLine(),
         timeCounter: 1,
         errors: 0
       })
+      setTimeout(() => {
+        this.setState({ correctInputLine: false })
+      }, 200)
       this.hightLightFirstButton()
     }
   }

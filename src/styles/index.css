@@ -10,6 +10,11 @@ body {
   background-color: yellow;
 }
 
+.correct-input-line {
+  background-color: #32CD32;
+;
+}
+
 .correct-button {
   background-color: inherit;
 }
