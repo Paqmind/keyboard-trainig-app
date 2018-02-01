@@ -49,8 +49,8 @@ class Main extends Component {
 
   keyDownHandler = (e) => {
     let { inputValue, exampleLine, charCounter, errors } = this.state
-    let nextButton = exampleLine.join(" ").split("")[charCounter + 1],
-        currButton = exampleLine.join(" ").split("")[charCounter]
+    let nextButton = exampleLine[charCounter + 1],
+        currButton = exampleLine[charCounter]
 
     if (e.key == currButton) {
       this.setState({
@@ -88,7 +88,7 @@ class Main extends Component {
   }
 
   exampleLineVsInputCompare = (inputValue, exampleLine) => {
-    if (inputValue == exampleLine.join(" ")) {
+    if (inputValue == exampleLine.join("")) {
       clearInterval(this.timerId)
       this.timerId = 0
       this.setState({

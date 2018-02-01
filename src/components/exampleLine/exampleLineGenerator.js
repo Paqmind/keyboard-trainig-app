@@ -15,6 +15,6 @@ export default function exampleLineGenerator(mode, store, maxWords, maxChars) {
   } else {
     exampleLine = []
   }
-
-  return exampleLine
+  exampleLine.push("")
+  return exampleLine.join(" ").split("")
 }
