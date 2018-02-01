@@ -1,4 +1,4 @@
-const classNames = require('src/components/input/classNames')
+const classNames = require('classnames')
 
 const classNamesGenerator = (state) => {
   return classNames({
