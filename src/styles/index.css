@@ -252,6 +252,10 @@ li {
   text-shadow: 0px 1px 0px #f5f5f5;
 }
 
+.key:hover {
+  cursor: pointer;
+}
+
 .key:active, .key-pressed {
   color: #888;
   background: #ebeced;
