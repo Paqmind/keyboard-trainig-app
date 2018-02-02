@@ -162,18 +162,16 @@ class Main extends Component {
   }
 
   installKeyDownHandler = () => {
-    let input = document.getElementById("input")
-    input.addEventListener("keydown", this.keyDownHandler)
+    document.addEventListener("keydown", this.keyDownHandler)
     return () => {
-      input.removeEventListener("keydown", this.keyDownHandler)
+      document.removeEventListener("keydown", this.keyDownHandler)
     }
   }
 
   installKeyUpHandler = () => {
-    let input = document.getElementById("input")
-    input.addEventListener('keyup', this.keyUpHandler)
+    document.addEventListener('keyup', this.keyUpHandler)
     return () => {
-      input.removeEventListener('keyup', this.keyUpHandler)
+      document.removeEventListener('keyup', this.keyUpHandler)
     }
   }
 
