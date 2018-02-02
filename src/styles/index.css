@@ -12,7 +12,6 @@ body {
 
 .correct-input-line {
   background-color: #32CD32;
-;
 }
 
 .correct-button {
@@ -250,10 +249,6 @@ li {
       0 2px 0 #c9c9c9,
       0 2px 3px #333;
   text-shadow: 0px 1px 0px #f5f5f5;
-}
-
-.key:hover {
-  cursor: pointer;
 }
 
 .key:active, .key-pressed {
