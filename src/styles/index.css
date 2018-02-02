@@ -146,10 +146,6 @@ body {
   justify-content: space-around;
 }
 
-a {
-  color: #999999;
-}
-
 .container {
   display: block;
   position: relative;
@@ -287,11 +283,11 @@ li {
 }
 
 
-#numbers li a span {
+#numbers li div span {
   display: block;
 }
 
-#numbers li a b {
+#numbers li div b {
   margin: 3px 0 3px;
   display: block;}
 
@@ -308,7 +304,7 @@ li {
   text-transform: lowercase;
 }
 
-#qwerty li a span {
+#qwerty li div span {
   display: block;
   margin: 13px 0 0;
   text-transform: uppercase;
@@ -330,7 +326,7 @@ li {
   margin: 2px 0 0;
 }
 
-#asdfg li a span {
+#asdfg li div span {
   display: block;
   margin: 13px 0 0;
   text-transform: uppercase;
@@ -375,7 +371,7 @@ li {
   font-size: 7.5pt;
 }
 
-#zxcvb li a span {
+#zxcvb li div span {
   display: block;
   margin: 13px 0 0;
   text-transform: uppercase;
