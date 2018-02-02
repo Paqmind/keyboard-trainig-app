@@ -48,6 +48,36 @@ class Main extends Component {
     this.timerId = 0
   }
 
+  onClick = (e) => {
+    let { inputValue, exampleLine, charCounter, errors } = this.state
+    let nextButton = exampleLine[charCounter + 1],
+        currButton = exampleLine[charCounter],
+        clickedButton = e.currentTarget.dataset.key
+
+    if (clickedButton == currButton) {
+      this.setState({
+        inputValue: inputValue + clickedButton,
+        btnHighlighted: nextButton,
+        wrongButtonPressed: false,
+        charCounter: charCounter + 1
+      })
+
+      this.setCountingInterval()
+      this.statsCounter()
+      this.exampleLineVsInputCompare(this.state.inputValue, exampleLine)
+
+    } else {
+      this.setState({
+        wrongButtonPressed: true,
+        errors: errors + 1
+      })
+      setTimeout(() => {
+        this.setState({ wrongButtonPressed: false })
+      }, 300)
+      this.statsCounter()
+    }
+  }
+
   keyDownHandler = (e) => {
     let { inputValue, exampleLine, charCounter, errors } = this.state
     let nextButton = exampleLine[charCounter + 1],
@@ -67,7 +97,6 @@ class Main extends Component {
       this.exampleLineVsInputCompare(this.state.inputValue, exampleLine)
 
     } else {
-      this.statsCounter()
       this.setState({
         wrongButtonPressed: true,
         errors: errors + 1
@@ -75,6 +104,7 @@ class Main extends Component {
       setTimeout(() => {
         this.setState({ wrongButtonPressed: false })
       }, 300)
+      this.statsCounter()
     }
   }
 
@@ -176,7 +206,7 @@ class Main extends Component {
       <div className="divider"></div>
       <Input state={this.state} />
       <ExampleLine state={this.state} />
-      <Keyboard state={this.state} />
+      <Keyboard state={this.state} onClickHandler={this.onClick} />
       <Footer/>
     </div>
   }
