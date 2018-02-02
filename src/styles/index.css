@@ -24,13 +24,9 @@ body {
   font-size: 1.3em;
   font-family: Arial;
   margin-top: 8vh;
-  border: 2px solid #87CEEB;
-}
-
-.input:focus {
   border: none;
-  border-bottom: 1px dotted black;
   outline: none;
+  border-bottom: 1px dotted black;
 }
 
 .example-line-wrapper {
