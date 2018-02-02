@@ -25,9 +25,8 @@ const Keyboard = props => {
         keys[0].map((obj) => {
           return <li key={obj.code}>
             <div className={classNamesGenerator(props.state, obj)} id={obj.id || null}
-                 onClick={e => {props.onClickHandler(e)}}
                  data-key={obj.value || obj.caption}>
-              <span>{obj.caption}</span>
+              <span data-key={obj.value || obj.caption}>{obj.caption}</span>
             </div>
           </li>
         })
@@ -38,9 +37,8 @@ const Keyboard = props => {
         keys[1].map((obj) => {
           return <li key={obj.code}>
             <div className={classNamesGenerator(props.state, obj)} id={obj.id || null}
-                 onClick={e => {props.onClickHandler(e)}}
                  data-key={obj.value || obj.caption}>
-              <span>{obj.caption}</span>
+              <span data-key={obj.value || obj.caption}>{obj.caption}</span>
             </div>
           </li>
         })
@@ -51,9 +49,8 @@ const Keyboard = props => {
         keys[2].map((obj) => {
           return <li key={obj.code}>
             <div className={classNamesGenerator(props.state, obj)} id={obj.id || null}
-                 onClick={e => {props.onClickHandler(e)}}
                  data-key={obj.value || obj.caption}>
-              <span>{obj.caption}</span>
+              <span data-key={obj.value || obj.caption}>{obj.caption}</span>
             </div>
           </li>
         })
@@ -64,9 +61,8 @@ const Keyboard = props => {
         keys[3].map((obj) => {
           return <li key={obj.key}>
             <div className={classNamesGenerator(props.state, obj)} id={obj.id || null}
-                 onClick={e => {props.onClickHandler(e)}}
                  data-key={obj.value || obj.caption}>
-              <span>{obj.caption}</span>
+              <span data-key={obj.value || obj.caption}>{obj.caption}</span>
             </div>
           </li>
         })

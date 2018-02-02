@@ -48,11 +48,11 @@ class Main extends Component {
     this.timerId = 0
   }
 
-  onClick = (e) => {
+  onClickHandler = (e) => {
     let { inputValue, exampleLine, charCounter } = this.state
     let nextButton = exampleLine[charCounter + 1],
         currButton = exampleLine[charCounter],
-        clickedButton = e.currentTarget.dataset.key
+        clickedButton = e.target.dataset.key
 
     if (clickedButton == currButton) {
       this.setState((prevState) => ({
@@ -153,6 +153,14 @@ class Main extends Component {
     }
   }
 
+  installClickHandler = () => {
+    let keyboard = document.getElementById("keyboard")
+    keyboard.addEventListener("click", this.onClickHandler)
+    return () => {
+      keyboard.removeEventListener("click", this.onClickHandler)
+    }
+  }
+
   installKeyDownHandler = () => {
     let input = document.getElementById("input")
     input.addEventListener("keydown", this.keyDownHandler)
@@ -192,11 +200,12 @@ class Main extends Component {
     this.subscriptions.push(this.installModeSwitcherHandler())
     this.subscriptions.push(this.installKeyDownHandler())
     this.subscriptions.push(this.installKeyUpHandler())
+    this.subscriptions.push(this.installClickHandler())
   }
 
   componentWillUnmount() {
-    for (let i of this.subscriptions) {
-      i()
+    for (let removeEventListener of this.subscriptions) {
+      removeEventListener()
     }
   }
 
@@ -206,7 +215,7 @@ class Main extends Component {
       <div className="divider"></div>
       <Input state={this.state} />
       <ExampleLine state={this.state} />
-      <Keyboard state={this.state} onClickHandler={this.onClick} />
+      <Keyboard state={this.state} />
       <Footer/>
     </div>
   }
