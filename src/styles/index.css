@@ -116,6 +116,10 @@ body {
   cursor: pointer;
 }
 
+.link {
+  color: #483D8B;
+}
+
 #keyboard {
   margin: 0 auto;
   margin-top: 10vh;
