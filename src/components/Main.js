@@ -49,28 +49,28 @@ class Main extends Component {
   }
 
   onClick = (e) => {
-    let { inputValue, exampleLine, charCounter, errors } = this.state
+    let { inputValue, exampleLine, charCounter } = this.state
     let nextButton = exampleLine[charCounter + 1],
         currButton = exampleLine[charCounter],
         clickedButton = e.currentTarget.dataset.key
 
     if (clickedButton == currButton) {
-      this.setState({
+      this.setState((prevState) => ({
         inputValue: inputValue + clickedButton,
         btnHighlighted: nextButton,
         wrongButtonPressed: false,
-        charCounter: charCounter + 1
-      })
+        charCounter: prevState.charCounter + 1
+      }))
 
       this.setCountingInterval()
       this.statsCounter()
       this.exampleLineVsInputCompare(this.state.inputValue, exampleLine)
 
     } else {
-      this.setState({
+      this.setState((prevState) => ({
         wrongButtonPressed: true,
-        errors: errors + 1
-      })
+        errors: prevState.errors + 1
+      }))
       setTimeout(() => {
         this.setState({ wrongButtonPressed: false })
       }, 300)
@@ -79,28 +79,28 @@ class Main extends Component {
   }
 
   keyDownHandler = (e) => {
-    let { inputValue, exampleLine, charCounter, errors } = this.state
+    let { inputValue, exampleLine, charCounter } = this.state
     let nextButton = exampleLine[charCounter + 1],
         currButton = exampleLine[charCounter]
 
     if (e.key == currButton) {
-      this.setState({
+      this.setState((prevState) => ({
         inputValue: inputValue + e.key,
         btnPressed: e.keyCode,
         btnHighlighted: nextButton,
         wrongButtonPressed: false,
-        charCounter: charCounter + 1
-      })
+        charCounter: prevState.charCounter + 1
+      }))
 
       this.setCountingInterval()
       this.statsCounter()
       this.exampleLineVsInputCompare(this.state.inputValue, exampleLine)
 
     } else {
-      this.setState({
+      this.setState((prevState) => ({
         wrongButtonPressed: true,
-        errors: errors + 1
-      })
+        errors: prevState.errors + 1
+      }))
       setTimeout(() => {
         this.setState({ wrongButtonPressed: false })
       }, 300)
