@@ -221,6 +221,7 @@ li {
   color: #000000;
   font: bold 9pt arial;
   text-decoration: none;
+  cursor: pointer;
   text-align: center;
   width: 44px;
   height: 41px;
