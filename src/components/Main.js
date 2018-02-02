@@ -147,7 +147,9 @@ class Main extends Component {
 
   setCountingInterval = () => {
     if (this.timerId == 0) {
-      this.timerId = setInterval(() => this.setState({ timeCounter: this.state.timeCounter + 1 }), 1000)
+      this.timerId = setInterval(() => this.setState((prevState) => ({
+        timeCounter: prevState.timeCounter + 1
+      })), 1000)
     }
   }
 
