@@ -1,8 +1,17 @@
 {
-  "main.css": "static/css/main.d659dc69.css",
-  "main.css.map": "static/css/main.d659dc69.css.map",
-  "main.js": "static/js/main.6bfd2ba4.js",
-  "main.js.map": "static/js/main.6bfd2ba4.js.map",
+  "main.css": "static/css/main.c7de59a5.css",
+  "main.css.map": "static/css/main.c7de59a5.css.map",
+  "main.js": "static/js/main.a30478bf.js",
+  "main.js.map": "static/js/main.a30478bf.js.map",
   "static/media/errors.svg": "static/media/errors.1554062d.svg",
+  "static/media/left-index.png": "static/media/left-index.e6548030.png",
+  "static/media/left-middle.png": "static/media/left-middle.1ca9eaf9.png",
+  "static/media/left-pinky.png": "static/media/left-pinky.1ec80643.png",
+  "static/media/left-ring.png": "static/media/left-ring.e1366ccf.png",
+  "static/media/left-thumb.png": "static/media/left-thumb.c6b4fc91.png",
+  "static/media/right-index.png": "static/media/right-index.1b38bf3c.png",
+  "static/media/right-middle.png": "static/media/right-middle.51f5ab04.png",
+  "static/media/right-pinky.png": "static/media/right-pinky.70f5fe5c.png",
+  "static/media/right-ring.png": "static/media/right-ring.746a0461.png",
   "static/media/speedometer.png": "static/media/speedometer.a31771db.png"
 }
