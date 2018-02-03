@@ -6,6 +6,7 @@ export default function classNamesGenerator(props, obj) {
    [`${obj.caption}`]: true,
    [`${obj.className}`]: !!obj.className,
    [`${obj.code}`]: true,
+   [`${obj.finger}`]: props.btnHighlighted == obj.caption,
    "key-highlighted": props.btnHighlighted == obj.caption,
    "key-pressed": props.btnPressed == obj.code
  })
